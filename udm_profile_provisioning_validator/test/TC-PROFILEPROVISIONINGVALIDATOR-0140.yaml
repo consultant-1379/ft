@@ -1,0 +1,305 @@
+description: A dnnListId cannot be deleted on UPDATE operations over UDM slice profiles
+steps:
+  -
+    description:  Profile update error, a dnnListId cannot be deleted on UPDATE operations over UDM slice profiles.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path : "/profiles/udmProfiles/udmSliceProfiles/1111"
+            data:
+              udmSliceProfileId : "profile1"
+              plmnIdSets:
+                -
+                  plmnIdSetIdentifier : "Default"
+                  nssai:
+                    defaultSingleNssais:
+                      -
+                        dnnListId : "Default"
+                        nssai:
+                          sst: 3
+                          sd: "ABCDEF"
+                    singleNssais:
+                      -
+                        dnnListId : "Default"
+                        nssai:
+                          sst: 4
+                  dnnLists:
+                    -
+                      dnnListId: "Default"
+                      dnnDataList:
+                        -
+                          dnn: "Default"
+                          defaultDnnIndicator: true
+                          lboRoamingAllowed: false
+                          iwkEpsInd: false
+                          ladnIndicator: false
+                          sscModes:
+                            defaultSscMode: "SSC_MODE_1"
+                            allowedSscModes:
+                              -
+                                "SSC_MODE_2"
+                          pduSessionTypes:
+                            defaultSessionType: "IPV4"
+                            allowedSessionTypes:
+                              -
+                                "IPV6"
+                          5gQosProfile:
+                            5qi: 233
+                            priorityLevel: 110
+                            arp:
+                              priorityLevel: 11
+                              preemptCap : "NOT_PREEMPT"
+                              preemptVuln: "NOT_PREEMPTABLE"
+                          upSecurity:
+                            upIntegr: "REQUIRED"
+                            upConfid: "NOT_NEEDED"
+                -
+                  plmnIdSetIdentifier : "12345"
+                  nssai:
+                    defaultSingleNssais:
+                      -
+                        dnnListId : "Default"
+                        nssai:
+                          sst: 2
+                          sd: "ABCDEE"
+                    singleNssais:
+                      -
+                        dnnListId : "Default"
+                        nssai:
+                          sst: 1
+                  dnnLists:
+                    -
+                      dnnListId: "Default"
+                      dnnDataList:
+                        -
+                          dnn: "Default"
+                          defaultDnnIndicator: true
+                          lboRoamingAllowed: false
+                          iwkEpsInd: false
+                          ladnIndicator: false
+                          sscModes:
+                            defaultSscMode: "SSC_MODE_1"
+                            allowedSscModes:
+                              -
+                                "SSC_MODE_2"
+                          pduSessionTypes:
+                            defaultSessionType: "IPV4"
+                            allowedSessionTypes:
+                              -
+                                "IPV6"
+                          5gQosProfile:
+                            5qi: 233
+                            priorityLevel: 110
+                            arp:
+                              priorityLevel: 11
+                              preemptCap : "NOT_PREEMPT"
+                              preemptVuln: "NOT_PREEMPTABLE"
+                          upSecurity:
+                            upIntegr: "REQUIRED"
+                            upConfid: "NOT_NEEDED"
+        relatedResources:
+          "/profiles/udmProfiles/udmSliceProfiles/1111":
+              udmSliceProfileId : "profile1"
+              plmnIdSets:
+                -
+                  plmnIdSetIdentifier : "Default"
+                  nssai:
+                    defaultSingleNssais:
+                      -
+                        dnnListId : "Default"
+                        nssai:
+                          sst: 3
+                          sd: "ABCDEF"
+                    singleNssais:
+                      -
+                        dnnListId : "Default"
+                        nssai:
+                          sst: 4
+                  dnnLists:
+                    -
+                      dnnListId: "1"
+                      dnnDataList:
+                        -
+                          dnn: "Default"
+                          defaultDnnIndicator: true
+                          lboRoamingAllowed: false
+                          iwkEpsInd: false
+                          ladnIndicator: false
+                          sscModes:
+                            defaultSscMode: "SSC_MODE_1"
+                            allowedSscModes:
+                              -
+                                "SSC_MODE_2"
+                          pduSessionTypes:
+                            defaultSessionType: "IPV4"
+                            allowedSessionTypes:
+                              -
+                                "IPV6"
+                          5gQosProfile:
+                            5qi: 233
+                            priorityLevel: 110
+                            arp:
+                              priorityLevel: 11
+                              preemptCap : "NOT_PREEMPT"
+                              preemptVuln: "NOT_PREEMPTABLE"
+                          upSecurity:
+                            upIntegr: "REQUIRED"
+                            upConfid: "NOT_NEEDED"
+                    -
+                      dnnListId: "Default"
+                      dnnDataList:
+                        -
+                          dnn: "Default"
+                          defaultDnnIndicator: true
+                          lboRoamingAllowed: false
+                          iwkEpsInd: false
+                          ladnIndicator: false
+                          sscModes:
+                            defaultSscMode: "SSC_MODE_1"
+                            allowedSscModes:
+                              -
+                                "SSC_MODE_2"
+                          pduSessionTypes:
+                            defaultSessionType: "IPV4"
+                            allowedSessionTypes:
+                              -
+                                "IPV6"
+                          5gQosProfile:
+                            5qi: 233
+                            priorityLevel: 110
+                            arp:
+                              priorityLevel: 11
+                              preemptCap : "NOT_PREEMPT"
+                              preemptVuln: "NOT_PREEMPTABLE"
+                          upSecurity:
+                            upIntegr: "REQUIRED"
+                            upConfid: "NOT_NEEDED"
+                -
+                  plmnIdSetIdentifier : "12345"
+                  nssai:
+                    defaultSingleNssais:
+                      -
+                        dnnListId : "Default"
+                        nssai:
+                          sst: 2
+                          sd: "ABCDEE"
+                    singleNssais:
+                      -
+                        dnnListId : "Default"
+                        nssai:
+                          sst: 1
+                  dnnLists:
+                    -
+                      dnnListId: "1"
+                      dnnDataList:
+                        -
+                          dnn: "Default"
+                          defaultDnnIndicator: true
+                          lboRoamingAllowed: false
+                          iwkEpsInd: false
+                          ladnIndicator: false
+                          sscModes:
+                            defaultSscMode: "SSC_MODE_1"
+                            allowedSscModes:
+                              -
+                                "SSC_MODE_2"
+                          pduSessionTypes:
+                            defaultSessionType: "IPV4"
+                            allowedSessionTypes:
+                              -
+                                "IPV6"
+                          5gQosProfile:
+                            5qi: 233
+                            priorityLevel: 110
+                            arp:
+                              priorityLevel: 11
+                              preemptCap : "NOT_PREEMPT"
+                              preemptVuln: "NOT_PREEMPTABLE"
+                          upSecurity:
+                            upIntegr: "REQUIRED"
+                            upConfid: "NOT_NEEDED"
+                    -
+                      dnnListId: "2"
+                      dnnDataList:
+                        -
+                          dnn: "Default"
+                          defaultDnnIndicator: true
+                          lboRoamingAllowed: false
+                          iwkEpsInd: false
+                          ladnIndicator: false
+                          sscModes:
+                            defaultSscMode: "SSC_MODE_1"
+                            allowedSscModes:
+                              -
+                                "SSC_MODE_2"
+                          pduSessionTypes:
+                            defaultSessionType: "IPV4"
+                            allowedSessionTypes:
+                              -
+                                "IPV6"
+                          5gQosProfile:
+                            5qi: 233
+                            priorityLevel: 110
+                            arp:
+                              priorityLevel: 11
+                              preemptCap : "NOT_PREEMPT"
+                              preemptVuln: "NOT_PREEMPTABLE"
+                          upSecurity:
+                            upIntegr: "REQUIRED"
+                            upConfid: "NOT_NEEDED"
+                    -
+                      dnnListId: "Default"
+                      dnnDataList:
+                        -
+                          dnn: "Default"
+                          defaultDnnIndicator: true
+                          lboRoamingAllowed: false
+                          iwkEpsInd: false
+                          ladnIndicator: false
+                          sscModes:
+                            defaultSscMode: "SSC_MODE_1"
+                            allowedSscModes:
+                              -
+                                "SSC_MODE_2"
+                          pduSessionTypes:
+                            defaultSessionType: "IPV4"
+                            allowedSessionTypes:
+                              -
+                                "IPV6"
+                          5gQosProfile:
+                            5qi: 233
+                            priorityLevel: 110
+                            arp:
+                              priorityLevel: 11
+                              preemptCap : "NOT_PREEMPT"
+                              preemptVuln: "NOT_PREEMPTABLE"
+                          upSecurity:
+                            upIntegr: "REQUIRED"
+                            upConfid: "NOT_NEEDED"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "\"dnnListId\"=\"1\" cannot be deleted for \"plmnIdSetIdentifier\"=\"Default\""
+                resource_path: "/profiles/udmProfiles/udmSliceProfiles/1111"
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "\"dnnListId\"=\"1\" cannot be deleted for \"plmnIdSetIdentifier\"=\"12345\""
+                resource_path: "/profiles/udmProfiles/udmSliceProfiles/1111"
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "\"dnnListId\"=\"2\" cannot be deleted for \"plmnIdSetIdentifier\"=\"12345\""
+                resource_path: "/profiles/udmProfiles/udmSliceProfiles/1111"

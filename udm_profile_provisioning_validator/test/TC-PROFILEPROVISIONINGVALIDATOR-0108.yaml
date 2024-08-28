@@ -1,0 +1,110 @@
+description: Profile Provisioning Validator, Profile creation success case, if there is a nssai without DnnListId attribute, add the default DnnListId = Default
+
+steps:
+  -
+    description:  Profile creation success. If there is a nssai without DnnListId attribute, add the default DnnListId = Default
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/profiles/udmProfiles/udmSliceProfiles/1111"
+            data:
+              udmSliceProfileId : "profile1"
+              plmnIdSets:
+                -
+                  plmnIdSetIdentifier: "Default"
+                  nssai:
+                    defaultSingleNssais:
+                      -
+                        nssai:
+                          sst: 3
+                          sd: "ABCDEF"
+                    singleNssais:
+                      -
+                        nssai:
+                          sst: 4
+                  dnnLists:
+                    -
+                      dnnListId: "Default"
+                      dnnDataList:
+                        -
+                          dnn: "Default"
+                          defaultDnnIndicator: true
+                          lboRoamingAllowed: false
+                          iwkEpsInd: false
+                          ladnIndicator: false
+                          sscModes:
+                            defaultSscMode: "SSC_MODE_1"
+                            allowedSscModes:
+                              -
+                                "SSC_MODE_2"
+                          pduSessionTypes:
+                            defaultSessionType: "IPV4"
+                            allowedSessionTypes:
+                              -
+                                "IPV6"
+                          5gQosProfile:
+                            5qi: 233
+                            priorityLevel: 110
+                            arp:
+                              priorityLevel: 11
+                              preemptCap : "NOT_PREEMPT"
+                              preemptVuln: "NOT_PREEMPTABLE"
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        content_type: application/json
+        data:
+          changes:
+            -
+              operation: "CREATE"
+              resource_path : "/profiles/udmProfiles/udmSliceProfiles/1111"
+              data:
+                udmSliceProfileId : "profile1"
+                plmnIdSets:
+                  -
+                    plmnIdSetIdentifier: "Default"
+                    nssai:
+                      defaultSingleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 3
+                            sd: "ABCDEF"
+                      singleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 4
+                    dnnLists:
+                      -
+                        dnnListId: "Default"
+                        dnnDataList:
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: false
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_1"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_2"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 233
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 11
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"

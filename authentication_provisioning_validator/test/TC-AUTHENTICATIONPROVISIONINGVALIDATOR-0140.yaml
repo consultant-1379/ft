@@ -1,0 +1,539 @@
+description: AuthSubscription object, Check mandatory attributes on creation legacy 4G relatedResources
+
+steps:
+  -
+    description:  AuthSubscription creation success, authenticationMethod is 5G_AKA, optional fields are present.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+        relatedResources:
+          "/legacy/serv=Auth/IMSI=123456789012345":
+            SQNPS: "4"
+            VNUMBER: "0"
+            AKAALGIND: "0"
+            AKATYPE: 1
+            A4IND: 2
+            IMSI: "123456789012345"
+            GAP: "::AgAFDhAQ"
+            SQNCS: "4"
+            objectClass: "AU1"
+            SQNIMS: "13"
+            EKI: "2200AA34D40C090D6D4C3B7763854AFB"
+            BNS: "1"
+            SQNEPS: "11"
+            A3A8IND: "15"
+            AMFVALUE: 47545
+            GAPSIGN: "1"
+            FSETIND: 11
+            CDC: "122"
+            KIND: 1
+            SQN: "0"
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        data:
+          changes:
+            -
+              operation: "CREATE"
+              resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+              data:
+                authenticationMethod : "5G_AKA"
+                encPermanentKey : "2200AA34D40C090D6D4C3B7763854AFB"
+                authenticationManagementField: "B9B9"
+                algorithmId: "11"
+                a4KeyInd: "1"
+                a4Ind: "2"
+            -
+              operation: "CREATE"
+              resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionDynamicData"
+              data:
+                sqnScheme: "TIME_BASED"
+                lastIndexes: {}
+        content_type: application/json
+  -
+    description:  AuthSubscription creation error, authenticationMethod is 5G_AKA, encPermanentKey not equal to legacy.EKI.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+        relatedResources:
+          "/legacy/serv=Auth/IMSI=123456789012345":
+            SQNPS: "4"
+            VNUMBER: "0"
+            AKAALGIND: "0"
+            AKATYPE: 1
+            A4IND: 2
+            IMSI: "123456789012345"
+            GAP: "::AgAFDhAQ"
+            SQNCS: "4"
+            objectClass: "AU1"
+            SQNIMS: "13"
+            EKI: "11111111111111111111111111111111"
+            BNS: "1"
+            SQNEPS: "11"
+            A3A8IND: "15"
+            AMFVALUE: 47545
+            GAPSIGN: "1"
+            FSETIND: 11
+            CDC: "122"
+            KIND: 1
+            SQN: "0"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"encPermanentKey\" is not equal to \"EKI\" attribute of 4G legacy subscription"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, authenticationMethod is 5G_AKA, a4KeyInd not equal to legacy.KIND.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "3"
+              a4Ind: "2"
+        relatedResources:
+          "/legacy/serv=Auth/IMSI=123456789012345":
+            SQNPS: "4"
+            VNUMBER: "0"
+            AKAALGIND: "0"
+            AKATYPE: 1
+            A4IND: 2
+            IMSI: "123456789012345"
+            GAP: "::AgAFDhAQ"
+            SQNCS: "4"
+            objectClass: "AU1"
+            SQNIMS: "13"
+            EKI: "2200AA34D40C090D6D4C3B7763854AFB"
+            BNS: "1"
+            SQNEPS: "11"
+            A3A8IND: "15"
+            AMFVALUE: 47545
+            GAPSIGN: "1"
+            FSETIND: 11
+            CDC: "122"
+            KIND: 1
+            SQN: "0"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"a4KeyInd\" is not equal to \"KIND\" attribute of 4G legacy subscription"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, authenticationMethod is 5G_AKA, a4Ind not equal to legacy.FSETIND.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+        relatedResources:
+          "/legacy/serv=Auth/IMSI=123456789012345":
+            SQNPS: "4"
+            VNUMBER: "0"
+            AKAALGIND: "0"
+            AKATYPE: 1
+            A4IND: 1
+            IMSI: "123456789012345"
+            GAP: "::AgAFDhAQ"
+            SQNCS: "4"
+            objectClass: "AU1"
+            SQNIMS: "13"
+            EKI: "2200AA34D40C090D6D4C3B7763854AFB"
+            BNS: "1"
+            SQNEPS: "11"
+            A3A8IND: "15"
+            AMFVALUE: 47545
+            GAPSIGN: "1"
+            FSETIND: 11
+            CDC: "122"
+            KIND: 1
+            SQN: "0"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"a4Ind\" is not equal to \"A4IND\" attribute of 4G legacy subscription"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, authenticationMethod is 5G_AKA, algorithmId not equal to legacy.A4IND.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+        relatedResources:
+          "/legacy/serv=Auth/IMSI=123456789012345":
+            SQNPS: "4"
+            VNUMBER: "0"
+            AKAALGIND: "0"
+            AKATYPE: 1
+            A4IND: 2
+            IMSI: "123456789012345"
+            GAP: "::AgAFDhAQ"
+            SQNCS: "4"
+            objectClass: "AU1"
+            SQNIMS: "13"
+            EKI: "2200AA34D40C090D6D4C3B7763854AFB"
+            BNS: "1"
+            SQNEPS: "11"
+            A3A8IND: "15"
+            AMFVALUE: 47545
+            GAPSIGN: "1"
+            FSETIND: 15
+            CDC: "122"
+            KIND: 1
+            SQN: "0"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"algorithmId\" is not equal to \"FSETIND\" attribute of 4G legacy subscription"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, authenticationMethod is 5G_AKA, authenticationManagementField not equal to legacy.AMFVALUE.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+        relatedResources:
+          "/legacy/serv=Auth/IMSI=123456789012345":
+            SQNPS: "4"
+            VNUMBER: "0"
+            AKAALGIND: "0"
+            AKATYPE: 1
+            A4IND: 2
+            IMSI: "123456789012345"
+            GAP: "::AgAFDhAQ"
+            SQNCS: "4"
+            objectClass: "AU1"
+            SQNIMS: "13"
+            EKI: "2200AA34D40C090D6D4C3B7763854AFB"
+            BNS: "1"
+            SQNEPS: "11"
+            A3A8IND: "15"
+            AMFVALUE: 48059
+            GAPSIGN: "1"
+            FSETIND: 11
+            CDC: "122"
+            KIND: 1
+            SQN: "0"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"authenticationManagementField\" is not equal to \"AMFVALUE\" attribute of 4G legacy subscription"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, authenticationMethod is 5G_AKA, authenticationManagementField not equal to legacy.AMFVALUE.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+        relatedResources:
+          "/legacy/serv=Auth/IMSI=123456789012345":
+            SQNPS: "4"
+            VNUMBER: "0"
+            AKAALGIND: "0"
+            AKATYPE: 1
+            A4IND: 2
+            IMSI: "123456789012345"
+            GAP: "::AgAFDhAQ"
+            SQNCS: "4"
+            objectClass: "AU1"
+            SQNIMS: "13"
+            EKI: "2200AA34D40C090D6D4C3B7763854AFB"
+            BNS: "1"
+            SQNEPS: "11"
+            A3A8IND: "15"
+            AMFVALUE: 48059
+            GAPSIGN: "1"
+            FSETIND: 11
+            CDC: "122"
+            KIND: 1
+            SQN: "0"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"authenticationManagementField\" is not equal to \"AMFVALUE\" attribute of 4G legacy subscription"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, authenticationMethod is 5G_AKA, encOpcKey not equal to legacy.EOPC.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+        relatedResources:
+          "/legacy/serv=Auth/IMSI=123456789012345":
+            SQNPS: "4"
+            VNUMBER: "0"
+            AKAALGIND: "0"
+            AKATYPE: 1
+            A4IND: 2
+            IMSI: "123456789012345"
+            GAP: "::AgAFDhAQ"
+            SQNCS: "4"
+            objectClass: "AU1"
+            SQNIMS: "13"
+            EKI: "2200AA34D40C090D6D4C3B7763854AFB"
+            BNS: "1"
+            SQNEPS: "11"
+            A3A8IND: "15"
+            AMFVALUE: 47545
+            GAPSIGN: "1"
+            FSETIND: 11
+            CDC: "122"
+            KIND: 1
+            SQN: "0"
+            EOPC: "A79FA860AE68BAB833772DA70E983A4B"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"encOpcKey\" is not equal to \"EOPC\" attribute of 4G legacy subscription"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, legacy AKATYPE has an invalid value
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+        relatedResources:
+          "/legacy/serv=Auth/IMSI=123456789012345":
+            SQNPS: "4"
+            VNUMBER: "0"
+            AKAALGIND: "0"
+            AKATYPE: 4
+            A4IND: 2
+            IMSI: "123456789012345"
+            GAP: "::AgAFDhAQ"
+            SQNCS: "4"
+            objectClass: "AU1"
+            SQNIMS: "13"
+            EKI: "2200AA34D40C090D6D4C3B7763854AFB"
+            BNS: "1"
+            SQNEPS: "11"
+            A3A8IND: "15"
+            AMFVALUE: 47545
+            GAPSIGN: "1"
+            FSETIND: 11
+            CDC: "122"
+            KIND: 1
+            SQN: "0"
+            EOPC: "7AF98A06EA86AB8B3377D27AE089A3A4"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"AKATYPE\" for 4G legacy subscription has an invalid value"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, legacy AKATYPE not defined
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+        relatedResources:
+          "/legacy/serv=Auth/IMSI=123456789012345":
+            SQNPS: "4"
+            VNUMBER: "0"
+            AKAALGIND: "0"
+            A4IND: 2
+            IMSI: "123456789012345"
+            GAP: "::AgAFDhAQ"
+            SQNCS: "4"
+            objectClass: "AU1"
+            SQNIMS: "13"
+            EKI: "2200AA34D40C090D6D4C3B7763854AFB"
+            BNS: "1"
+            SQNEPS: "11"
+            A3A8IND: "15"
+            AMFVALUE: 47545
+            GAPSIGN: "1"
+            FSETIND: 11
+            CDC: "122"
+            KIND: 1
+            SQN: "0"
+            EOPC: "7AF98A06EA86AB8B3377D27AE089A3A4"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"AKATYPE\" for 4G legacy subscription is not defined"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"

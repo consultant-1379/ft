@@ -1,0 +1,29 @@
+description: Provisioning Validator, ForbiddenAreas Update success case with Related Resources
+
+steps:
+  -
+    description:  ForbiddenAreas Update with Related Resources success.
+    values:
+      id: "22"
+      operation: "UPDATE"
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data: udm/forbidden_areas_related_resources
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        data:
+          changes:
+            -
+              operation: "UPDATE"
+              resource_path : "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+              data:
+                udmSliceProfileId:
+                  id: "1"      
+                forbiddenAreas:
+                  -
+                    id: "22"
+        content_type: application/json

@@ -1,0 +1,124 @@
+description: Provisioning Validator, ServiceAreaRestriction Error cases
+
+steps:
+  -
+    description:  ServiceAreaRestriction Creation Error.
+    values:
+      id: "1"
+      operation: "CREATE"
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data: udm/service_area_restriction_error
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: Only one reference to an udmRoamingArea allowed in "serviceAreaRestriction"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+  -
+    description:  ServiceAreaRestriction Update Error with relatedResources
+    values:
+      id: "1"
+      operation: "UPDATE"
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data: udm/service_area_restriction_error_related_resources
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: Only one reference to an udmRoamingArea allowed in "serviceAreaRestriction"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+  -
+    description:  ServiceAreaRestriction restrictionType is present but not areas
+    values:
+      id: "1"
+      operation: "CREATE"
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              serviceAreaRestriction:
+                restrictionType: "ALLOWED_AREAS"
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "IMSI1"
+            notifRef: "notifRef1"
+            imsiMask: "imsiMask1"
+          "/profiles/udmProfiles/udmSliceProfiles/1":
+            udmSliceProfileId : "1"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "\"restrictionType\" in \"serviceAreaRestriction\" can be only present if \"areas\" is present"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+  -
+    description:  ServiceAreaRestriction maxNumOfTAs is present but restrictionType is ALLOWED_AREAS
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              serviceAreaRestriction:
+                restrictionType: "NOT_ALLOWED_AREAS"
+                maxNumOfTAs: 2
+                areas:
+                  -
+                    id: "1"
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "IMSI1"
+            notifRef: "notifRef1"
+            imsiMask: "imsiMask1"
+          "/profiles/udmProfiles/udmSliceProfiles/1":
+            udmSliceProfileId : "1"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "\"maxNumOfTAs\" in \"serviceAreaRestriction\" can be only present if \"restrictionType\" is not \"NOT_ALLOWED_AREAS\""
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"

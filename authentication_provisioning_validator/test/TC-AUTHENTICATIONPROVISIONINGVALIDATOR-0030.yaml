@@ -1,0 +1,68 @@
+description: AuthSubscription object, Check delete operation
+
+steps:
+  -
+    description:  AuthSubscription delete success.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "DELETE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345"
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        data:
+          changes:
+            -
+              operation: "DELETE"
+              resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345"
+        content_type: application/json
+  -
+    description:  AuthSubscription delete error, imsi format error.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "DELETE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345678"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"imsi\" in \"resource_path\" has not the valid format"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345678"
+  -
+    description:  AuthSubscriptions delete success.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "DELETE"
+            resource_path : "/subscribers/123abc/authSubscription"
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        data:
+          changes:
+            -
+              operation: "DELETE"
+              resource_path : "/subscribers/123abc/authSubscription"
+        content_type: application/json

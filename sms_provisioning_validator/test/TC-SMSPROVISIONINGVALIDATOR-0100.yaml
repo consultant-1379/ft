@@ -1,0 +1,122 @@
+description: Provisioning Validator, URI Malformed Test Cases
+
+steps:
+  -
+    description:  Malformed Uri (vaaaalidation).
+    values:
+      id: "1"
+      operation: "CREATE"
+    rest:
+      host: provisioning_validator
+      uri: /vaaaaaalidation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: true
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: false
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "21405612345678"
+      content_type: application/json
+      expected_response:
+        code: 400
+        schema: udm/ProblemDetails
+        content_type: application/json
+  -
+    description:  Malformed Uri (v11111111111111).
+    rest:
+      host: provisioning_validator
+      uri: /validation/pepe/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: true
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: false
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "21405612345678"
+      content_type: application/json
+      expected_response:
+        code: 400
+        schema: udm/ProblemDetails
+        content_type: application/json
+  -
+    description:  Malformed Uri (vaaaalidaaate).
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/vaaaalidaaate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: true
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: false
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "21405612345678"
+      content_type: application/json
+      expected_response:
+        code: 400
+        schema: udm/ProblemDetails
+        content_type: application/json
+  -
+    description:  Malformed Uri (vaaaalidaaate).
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validaaate/vaaaaaaaaaaaalidate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: true
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: false
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "21405612345678"
+      content_type: application/json
+      expected_response:
+        code: 400
+        schema: udm/ProblemDetails
+        content_type: application/json

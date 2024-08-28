@@ -1,0 +1,30 @@
+description: Provisioning Validator, Roaming Area Creation with areaCodes success case
+
+steps:
+  -
+    description:  Roaming Area with AreaCode Creation success.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data: udm/roaming_area_area_code_success
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        data: udm/roaming_area_area_code_success
+        content_type: application/json
+  -
+    description:  Roaming Area with AreaCode Creation success with vendorSpecific.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data: udm/roaming_area_area_code_with_vendor_success
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        data: udm/roaming_area_area_code_with_vendor_success
+        content_type: application/json
+

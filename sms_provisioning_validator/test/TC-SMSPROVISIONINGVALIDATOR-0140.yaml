@@ -1,0 +1,262 @@
+description: mtSmsSubscribed must be true if either mtSmsBarringAll or mtSmsBarringRoaming is true
+
+steps:
+  -
+    description: mtSmsSubscribed must be true if either mtSmsBarringAll or mtSmsBarringRoaming is true for CREATE operation
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: false
+                mtSmsBarringAll: true
+                mtSmsBarringRoaming: false
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "21405612345678"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "mtSmsSubscribed must be true if either mtSmsBarringAll or mtSmsBarringRoaming is true"
+                resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+  -
+    description: mtSmsSubscribed must be true if either mtSmsBarringAll or mtSmsBarringRoaming is true for CREATE operation
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: false
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: true
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "21405612345678"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "mtSmsSubscribed must be true if either mtSmsBarringAll or mtSmsBarringRoaming is true"
+                resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+  -
+    description: mtSmsSubscribed can be false if mtSmsBarringAll and mtSmsBarringRoaming are false for CREATE operation
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: false
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: false
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "21405612345678"
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        content_type: application/json
+        data:
+          changes:
+            -
+              operation: "CREATE"
+              resource_path : "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+              data:
+                smsSubscriptionData:
+                  smsSubscribed: true
+                smsManagementSubscriptionData:
+                  mtSmsSubscribed: false
+                  mtSmsBarringAll: false
+                  mtSmsBarringRoaming: false
+                  moSmsSubscribed: false
+                  moSmsBarringAll: false
+                  moSmsBarringRoaming: false
+
+  -
+    description: mtSmsSubscribed must be true if either mtSmsBarringAll or mtSmsBarringRoaming is true for UPDATE operation
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: false
+                mtSmsBarringAll: true
+                mtSmsBarringRoaming: false
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData":
+            smsSubscriptionData:
+              smsSubscribed: true
+            smsManagementSubscriptionData:
+              mtSmsSubscribed: false
+              mtSmsBarringAll: true
+              mtSmsBarringRoaming: false
+              moSmsSubscribed: false
+              moSmsBarringAll: false
+              moSmsBarringRoaming: false
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "mtSmsSubscribed must be true if either mtSmsBarringAll or mtSmsBarringRoaming is true"
+                resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+
+  -
+    description: mtSmsSubscribed must be true if either mtSmsBarringAll or mtSmsBarringRoaming is true for UPDATE operation
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: false
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: true
+                moSmsSubscribed: true
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData":
+            smsSubscriptionData:
+              smsSubscribed: true
+            smsManagementSubscriptionData:
+              mtSmsSubscribed: false
+              mtSmsBarringAll: false
+              mtSmsBarringRoaming: true
+              moSmsSubscribed: true
+              moSmsBarringAll: false
+              moSmsBarringRoaming: false
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "mtSmsSubscribed must be true if either mtSmsBarringAll or mtSmsBarringRoaming is true"
+                resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+
+  -
+    description: mtSmsSubscribed can be false if mtSmsBarringAll and mtSmsBarringRoaming are false for UPDATE operation
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: false
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: false
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData":
+            smsSubscriptionData:
+              smsSubscribed: true
+            smsManagementSubscriptionData:
+              mtSmsSubscribed: true
+              mtSmsBarringAll: false
+              mtSmsBarringRoaming: false
+              moSmsSubscribed: false
+              moSmsBarringAll: false
+              moSmsBarringRoaming: false
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        content_type: application/json
+        data:
+          changes:
+            -
+              operation: "UPDATE"
+              resource_path : "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+              data:
+                smsSubscriptionData:
+                  smsSubscribed: true
+                smsManagementSubscriptionData:
+                  mtSmsSubscribed: false
+                  mtSmsBarringAll: false
+                  mtSmsBarringRoaming: false
+                  moSmsSubscribed: false
+                  moSmsBarringAll: false
+                  moSmsBarringRoaming: false

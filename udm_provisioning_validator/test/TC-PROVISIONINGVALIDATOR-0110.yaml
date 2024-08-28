@@ -1,0 +1,33 @@
+description: Provisioning Validator, ServiceAreaRestriction Error cases
+
+steps:
+  -
+    description:  ServiceAreaRestriction areas is not an array.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              serviceAreaRestriction:
+                restrictionType: "ALLOWED_AREAS"
+                areas:
+                  id: "1"          
+      content_type: application/json
+      expected_response:      
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:          
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails: 
+                description: Field:[areas] is not an array
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"      

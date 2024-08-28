@@ -1,0 +1,215 @@
+description: AuthSubscription object, Check authenticationMethod is modifiable as well as its conditional attributes are present on update
+
+steps:
+  -
+    description:  AuthSubscription update success, authenticationMethod is changed from 5G_AKA to EAP_AKA_PRIME, conditional fields are present.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "EAP_AKA_PRIME"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+        relatedResources:
+          "/subscribers/123abc/authSubscription":
+              "imsi-123456789012345":
+                authSubscriptionStaticData:
+                  authenticationMethod: "5G_AKA"
+                  encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+                  authenticationManagementField: "B9B9"
+                  algorithmId: "11"
+                  a4KeyInd: "1"
+                  a4Ind: "2"
+                authSubscriptionDynamicData:
+                  sqnScheme: "GENERAL"
+                  sqn: "111111111111"
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        data:
+          changes:
+            -
+              operation: "UPDATE"
+              resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+              data:
+                authenticationMethod : "EAP_AKA_PRIME"
+                encPermanentKey : "2200AA34D40C090D6D4C3B7763854AFB"
+                authenticationManagementField: "B9B9"
+                algorithmId: "11"
+                a4KeyInd: "1"
+                a4Ind: "2"
+        content_type: application/json
+  -
+    description:  AuthSubscription update error, authenticationMethod is changed from 5G_AKA to EAP_AKA_PRIME, conditional fields not present.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod: "EAP_AKA_PRIME"
+        relatedResources:
+          "/subscribers/123abc/authSubscription":
+              "imsi-123456789012345":
+                authSubscriptionStaticData:
+                  authenticationMethod: "5G_AKA"
+                  encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+                  authenticationManagementField: "B9B9"
+                  algorithmId: "11"
+                  a4KeyInd: "1"
+                  a4Ind: "2"
+                authSubscriptionDynamicData:
+                  sqnScheme: "GENERAL"
+                  sqn: "111111111111"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"encPermanentKey\" in \"authSubscriptionStaticData\" has not been defined with an AKA authentication method"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"authenticationManagementField\" in \"authSubscriptionStaticData\" has not been defined with an AKA authentication method"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"algorithmId\" in \"authSubscriptionStaticData\" has not been defined with an AKA authentication method"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"a4KeyInd\" in \"authSubscriptionStaticData\" has not been defined with an AKA authentication method"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"a4Ind\" in \"authSubscriptionStaticData\" has not been defined with an AKA authentication method"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription update success, authenticationMethod is changed from EAP_AKA_PRIME to 5G_AKA, conditional fields are present.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+        relatedResources:
+          "/subscribers/123abc/authSubscription":
+            "imsi-123456789012345":
+              authSubscriptionStaticData:
+                authenticationMethod: "EAP_AKA_PRIME"
+                encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+                authenticationManagementField: "B9B9"
+                algorithmId: "11"
+                a4KeyInd: "1"
+                a4Ind: "2"
+              authSubscriptionDynamicData:
+                sqnScheme: "GENERAL"
+                sqn: "111111111111"
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        data:
+          changes:
+            -
+              operation: "UPDATE"
+              resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+              data:
+                authenticationMethod : "5G_AKA"
+                encPermanentKey : "2200AA34D40C090D6D4C3B7763854AFB"
+                authenticationManagementField: "B9B9"
+                algorithmId: "11"
+                a4KeyInd: "1"
+                a4Ind: "2"
+        content_type: application/json
+  -
+    description:  AuthSubscription update error, authenticationMethod is changed from EAP_AKA_PRIME to 5G_AKA, conditional fields not present.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod: "5G_AKA"
+        relatedResources:
+          "/subscribers/123abc/authSubscription":
+            "imsi-123456789012345":
+              authSubscriptionStaticData:
+                authenticationMethod: "EAP_AKA_PRIME"
+                encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+                authenticationManagementField: "B9B9"
+                algorithmId: "11"
+                a4KeyInd: "1"
+                a4Ind: "2"
+              authSubscriptionDynamicData:
+                sqnScheme: "GENERAL"
+                sqn: "111111111111"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"encPermanentKey\" in \"authSubscriptionStaticData\" has not been defined with an AKA authentication method"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"authenticationManagementField\" in \"authSubscriptionStaticData\" has not been defined with an AKA authentication method"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"algorithmId\" in \"authSubscriptionStaticData\" has not been defined with an AKA authentication method"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"a4KeyInd\" in \"authSubscriptionStaticData\" has not been defined with an AKA authentication method"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"a4Ind\" in \"authSubscriptionStaticData\" has not been defined with an AKA authentication method"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"

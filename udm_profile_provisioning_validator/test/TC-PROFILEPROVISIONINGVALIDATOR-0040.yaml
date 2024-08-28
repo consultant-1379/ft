@@ -1,0 +1,24 @@
+description: Profile Provisioning Validator, Profile Delete success case
+
+steps:
+  -
+    description:  Profile Delete success.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "DELETE"
+            resource_path : "/profiles/udmProfiles/udmSliceProfiles/1111"
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        content_type: application/json
+        data:
+          changes:
+            -
+              operation: "DELETE"
+              resource_path : "/profiles/udmProfiles/udmSliceProfiles/1111"

@@ -1,0 +1,31 @@
+description: Provisioning Validator, ServiceAreaRestriction Update success case with Related Resources
+
+steps:
+  -
+    description:  ServiceAreaRestriction Update with Related Resources success.
+    values:
+      id: "22"
+      operation: "UPDATE"
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data: udm/service_area_restriction_related_resources
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        data:
+          changes:
+            -
+              operation: "UPDATE"
+              resource_path : "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+              data:
+                udmSliceProfileId:
+                  id: "1"
+                serviceAreaRestriction:
+                  restrictionType: "ALLOWED_AREAS"
+                  areas:
+                    -
+                      id: "22"
+        content_type: application/json

@@ -1,0 +1,76 @@
+description: AuthSubscription object, algorithmId should only be set to values corresponding to Milenage (0,2-15) and Test Algorithm (1)
+
+steps:
+  -
+    description:  AuthSubscription creation success, algorithmId has low value in allowed range (0).
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "0"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        data:
+          changes:
+            -
+              operation: "CREATE"
+              resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+              data:
+                authenticationMethod : "5G_AKA"
+                encPermanentKey : "2200AA34D40C090D6D4C3B7763854AFB"
+                authenticationManagementField: "B9B9"
+                algorithmId: "0"
+                a4KeyInd: "1"
+                a4Ind: "2"
+                encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+            -
+              operation: "CREATE"
+              resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionDynamicData"
+              data:
+                sqnScheme: "NON_TIME_BASED"
+                sqn: "000000000000"
+                lastIndexes: {}
+  -
+    description:  AuthSubscription creation error, algorithmId is above allowed range.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "16"
+              a4KeyInd: "1"
+              a4Ind: "2"              
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"algorithmId\" in \"authSubscriptionStaticData\" has invalid value"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"

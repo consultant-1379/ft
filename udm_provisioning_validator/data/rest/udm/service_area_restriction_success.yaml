@@ -1,0 +1,19 @@
+changes:
+  -
+    operation: $operation
+    resource_path : "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+    data:
+      udmSliceProfileId:
+        id: "1"
+      serviceAreaRestriction:
+        restrictionType: "ALLOWED_AREAS"
+        areas:
+          -
+            id: $id
+relatedResources:
+  "/subscribers/2208a/journal/provJournal":
+    imsi: "IMSI1"
+    notifRef: "notifRef1"
+    imsiMask: "imsiMask1"
+  "/profiles/udmProfiles/udmSliceProfiles/1":
+    udmSliceProfileId : "1"

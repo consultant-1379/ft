@@ -1,0 +1,4789 @@
+description: Provisioning Validator, UdmStaticData update error case with individual NSSAIs and DNNs. DNN rules are not fulfilled
+
+steps:
+  -
+    description:  UdmStaticData with individual NSSAIs and DNNs update error. There cannot be duplicated DNNs in each dnnList of udmSliceData
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              subscribedUeAmbr:
+                downlink: "1 Gbps"
+                uplink: "2 Mbps"
+              ratRestrictions:
+                -
+                  "NR"
+                -
+                  "WLAN"
+              forbiddenAreas:
+                -
+                  id: "1"
+              serviceAreaRestriction:
+                restrictionType: "ALLOWED_AREAS"
+                areas:
+                  -
+                    id: "1"
+                maxNumOfTAs: 100
+              coreNetworkTypeRestrictions:
+                -
+                  "5GC"
+                -
+                  "EPC"
+              mpsPriority: true
+              mcsPriority: false
+              dlPacketCount: 3
+              micoAllowed: false
+              staticIpAddress:
+                nssaiDnnIpLists:
+                  -
+                    nssai:
+                      sst: 14
+                      sd: "ABCDEF"
+                    dnnIpList:
+                      -
+                        dnn: "5"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.1"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7334"
+                      -
+                        dnn: "7"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.2"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7335"
+                  -
+                    nssai:
+                      sst: 15
+                      sd: "ABCEEE"
+                    dnnIpList:
+                      -
+                        dnn: "6"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.3"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7336"
+                      -
+                        dnn: "8"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.4"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7337"
+              roamingOdb: "OUTSIDE_HOME_PLMN"
+              ueUsageType: 23
+              rfspIndex: 98
+              subsRegTimer: 102
+              udmSliceData:
+                plmnIdSets:
+                  -
+                    plmnIdSetIdentifier: "12345"
+                    nssai:
+                      defaultSingleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 5
+                            sd: "AAAAAA"
+                        -
+                          dnnListId : "1"
+                          nssai:
+                            sst: 3
+                            sd: "EEEAAA"
+                      singleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 5
+                        -
+                          dnnListId : "4"
+                          nssai:
+                            sst: 4
+                            sd: "ABCCBA"
+                    dnnLists:
+                      -
+                        dnnListId: "1"
+                        dnnDataList:
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: true
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_1"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_2"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV6"
+                              allowedSessionTypes:
+                                -
+                                  "IPV4"
+                            5gQosProfile:
+                              5qi: 235
+                              priorityLevel: 112
+                              arp:
+                                priorityLevel: 13
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+                          -
+                            dnn: "defAulT"
+                            defaultDnnIndicator: false
+                            lboRoamingAllowed: false
+                            iwkEpsInd: true
+                            ladnIndicator: true
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_2"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_1"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 234
+                              priorityLevel: 111
+                              arp:
+                                priorityLevel: 12
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+                      -
+                        dnnListId: "4"
+                        dnnDataList:
+                          -
+                            dnn: "DNN4"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: false
+                            iwkEpsInd: true
+                            ladnIndicator: true
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_2"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_1"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 230
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 12
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: false
+                            lboRoamingAllowed: false
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_2"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_1"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 233
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 10
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "IMSI1"
+            notifRef: "notifRef1"
+            imsiMask: "imsiMask1"
+          "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData":
+            udmSliceProfileId:
+              id: "1"
+          "/profiles/udmProfiles/udmSliceProfiles/1":
+            udmSliceProfileId : "1"
+            plmnIdSets:
+              -
+                plmnIdSetIdentifier: "Default"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+                  -
+                    dnnListId: "1"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: true
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV6"
+                          allowedSessionTypes:
+                            -
+                              "IPV4"
+                        5gQosProfile:
+                          5qi: 220
+                          priorityLevel: 105
+                          arp:
+                            priorityLevel: 9
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+              -
+                plmnIdSetIdentifier: "12345"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+                  -
+                    dnnListId: "1"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: true
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV6"
+                          allowedSessionTypes:
+                            -
+                              "IPV4"
+                        5gQosProfile:
+                          5qi: 220
+                          priorityLevel: 105
+                          arp:
+                            priorityLevel: 9
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+              -
+                plmnIdSetIdentifier: "12346"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"dnn\" is duplicated in \"dnnLists\""
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+  -
+    description:  UdmStaticData with individual NSSAIs and DNNs update error. Missing defaultSscMode in two DNNs.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              subscribedUeAmbr:
+                downlink: "1 Gbps"
+                uplink: "2 Mbps"
+              ratRestrictions:
+                -
+                  "NR"
+                -
+                  "WLAN"
+              forbiddenAreas:
+                -
+                  id: "1"
+              serviceAreaRestriction:
+                restrictionType: "ALLOWED_AREAS"
+                areas:
+                  -
+                    id: "1"
+                maxNumOfTAs: 100
+              coreNetworkTypeRestrictions:
+                -
+                  "5GC"
+                -
+                  "EPC"
+              mpsPriority: true
+              mcsPriority: false
+              dlPacketCount: 3
+              micoAllowed: false
+              staticIpAddress:
+                nssaiDnnIpLists:
+                  -
+                    nssai:
+                      sst: 14
+                      sd: "ABCDEF"
+                    dnnIpList:
+                      -
+                        dnn: "5"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.1"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7334"
+                      -
+                        dnn: "7"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.2"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7335"
+                  -
+                    nssai:
+                      sst: 15
+                      sd: "ABCEEE"
+                    dnnIpList:
+                      -
+                        dnn: "6"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.3"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7336"
+                      -
+                        dnn: "8"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.4"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7337"
+              roamingOdb: "OUTSIDE_HOME_PLMN"
+              ueUsageType: 23
+              rfspIndex: 98
+              subsRegTimer: 102
+              udmSliceData:
+                plmnIdSets:
+                  -
+                    plmnIdSetIdentifier: "12345"
+                    nssai:
+                      defaultSingleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 5
+                            sd: "AAAAAA"
+                        -
+                          dnnListId : "1"
+                          nssai:
+                            sst: 3
+                            sd: "EEEAAA"
+                      singleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 5
+                        -
+                          dnnListId : "4"
+                          nssai:
+                            sst: 4
+                            sd: "ABCCBA"
+                    dnnLists:
+                      -
+                        dnnListId: "1"
+                        dnnDataList:
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: true
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_2"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV6"
+                              allowedSessionTypes:
+                                -
+                                  "IPV4"
+                            5gQosProfile:
+                              5qi: 235
+                              priorityLevel: 112
+                              arp:
+                                priorityLevel: 13
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+                      -
+                        dnnListId: "4"
+                        dnnDataList:
+                          -
+                            dnn: "DNN4"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: false
+                            iwkEpsInd: true
+                            ladnIndicator: true
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_2"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_1"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 230
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 12
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: false
+                            lboRoamingAllowed: false
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_1"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 233
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 10
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "IMSI1"
+            notifRef: "notifRef1"
+            imsiMask: "imsiMask1"
+          "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData":
+            udmSliceProfileId:
+              id: "1"
+          "/profiles/udmProfiles/udmSliceProfiles/1":
+            udmSliceProfileId : "1"
+            plmnIdSets:
+              -
+                plmnIdSetIdentifier: "Default"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+                  -
+                    dnnListId: "1"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: true
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV6"
+                          allowedSessionTypes:
+                            -
+                              "IPV4"
+                        5gQosProfile:
+                          5qi: 220
+                          priorityLevel: 105
+                          arp:
+                            priorityLevel: 9
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+              -
+                plmnIdSetIdentifier: "12345"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+                  -
+                    dnnListId: "1"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: true
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV6"
+                          allowedSessionTypes:
+                            -
+                              "IPV4"
+                        5gQosProfile:
+                          5qi: 220
+                          priorityLevel: 105
+                          arp:
+                            priorityLevel: 9
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+              -
+                plmnIdSetIdentifier: "12346"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"defaultSscMode\" in \"sscModes\" is a required Field"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"defaultSscMode\" in \"sscModes\" is a required Field"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+  -
+    description:  UdmStaticData with individual NSSAIs and DNNs update error. Two DNNs have invalid value for defaultSscMode and allowedSscModes
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              subscribedUeAmbr:
+                downlink: "1 Gbps"
+                uplink: "2 Mbps"
+              ratRestrictions:
+                -
+                  "NR"
+                -
+                  "WLAN"
+              forbiddenAreas:
+                -
+                  id: "1"
+              serviceAreaRestriction:
+                restrictionType: "ALLOWED_AREAS"
+                areas:
+                  -
+                    id: "1"
+                maxNumOfTAs: 100
+              coreNetworkTypeRestrictions:
+                -
+                  "5GC"
+                -
+                  "EPC"
+              mpsPriority: true
+              mcsPriority: false
+              dlPacketCount: 3
+              micoAllowed: false
+              staticIpAddress:
+                nssaiDnnIpLists:
+                  -
+                    nssai:
+                      sst: 14
+                      sd: "ABCDEF"
+                    dnnIpList:
+                      -
+                        dnn: "5"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.1"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7334"
+                      -
+                        dnn: "7"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.2"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7335"
+                  -
+                    nssai:
+                      sst: 15
+                      sd: "ABCEEE"
+                    dnnIpList:
+                      -
+                        dnn: "6"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.3"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7336"
+                      -
+                        dnn: "8"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.4"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7337"
+              roamingOdb: "OUTSIDE_HOME_PLMN"
+              ueUsageType: 23
+              rfspIndex: 98
+              subsRegTimer: 102
+              udmSliceData:
+                plmnIdSets:
+                  -
+                    plmnIdSetIdentifier: "12345"
+                    nssai:
+                      defaultSingleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 5
+                            sd: "AAAAAA"
+                        -
+                          dnnListId : "1"
+                          nssai:
+                            sst: 3
+                            sd: "EEEAAA"
+                      singleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 5
+                        -
+                          dnnListId : "4"
+                          nssai:
+                            sst: 4
+                            sd: "ABCCBA"
+                    dnnLists:
+                      -
+                        dnnListId: "1"
+                        dnnDataList:
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: true
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "HELLO"
+                              allowedSscModes:
+                                -
+                                  "WORLD"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV6"
+                              allowedSessionTypes:
+                                -
+                                  "IPV4"
+                            5gQosProfile:
+                              5qi: 235
+                              priorityLevel: 112
+                              arp:
+                                priorityLevel: 13
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+                      -
+                        dnnListId: "4"
+                        dnnDataList:
+                          -
+                            dnn: "DNN4"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: false
+                            iwkEpsInd: true
+                            ladnIndicator: true
+                            sscModes:
+                              defaultSscMode: "GOOD"
+                              allowedSscModes:
+                                -
+                                  "BYE"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 230
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 12
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: false
+                            lboRoamingAllowed: false
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_2"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_1"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 233
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 10
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "IMSI1"
+            notifRef: "notifRef1"
+            imsiMask: "imsiMask1"
+          "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData":
+            udmSliceProfileId:
+              id: "1"
+          "/profiles/udmProfiles/udmSliceProfiles/1":
+            udmSliceProfileId : "1"
+            plmnIdSets:
+              -
+                plmnIdSetIdentifier: "Default"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+                  -
+                    dnnListId: "1"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: true
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV6"
+                          allowedSessionTypes:
+                            -
+                              "IPV4"
+                        5gQosProfile:
+                          5qi: 220
+                          priorityLevel: 105
+                          arp:
+                            priorityLevel: 9
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+              -
+                plmnIdSetIdentifier: "12345"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+                  -
+                    dnnListId: "1"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: true
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV6"
+                          allowedSessionTypes:
+                            -
+                              "IPV4"
+                        5gQosProfile:
+                          5qi: 220
+                          priorityLevel: 105
+                          arp:
+                            priorityLevel: 9
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+              -
+                plmnIdSetIdentifier: "12346"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"defaultSscMode\" in \"sscModes\" has an Invalid Value"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"allowedSscModes\" in \"sscModes\" has an Invalid Value"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"defaultSscMode\" in \"sscModes\" has an Invalid Value"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"allowedSscModes\" in \"sscModes\" has an Invalid Value"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+  -
+    description:  UdmStaticData with individual NSSAIs and DNNs update error. Two DNNs have invalid size for allowedSscModes and there are repeated values between defaultSscMode and allowedSscModes
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              subscribedUeAmbr:
+                downlink: "1 Gbps"
+                uplink: "2 Mbps"
+              ratRestrictions:
+                -
+                  "NR"
+                -
+                  "WLAN"
+              forbiddenAreas:
+                -
+                  id: "1"
+              serviceAreaRestriction:
+                restrictionType: "ALLOWED_AREAS"
+                areas:
+                  -
+                    id: "1"
+                maxNumOfTAs: 100
+              coreNetworkTypeRestrictions:
+                -
+                  "5GC"
+                -
+                  "EPC"
+              mpsPriority: true
+              mcsPriority: false
+              dlPacketCount: 3
+              micoAllowed: false
+              staticIpAddress:
+                nssaiDnnIpLists:
+                  -
+                    nssai:
+                      sst: 14
+                      sd: "ABCDEF"
+                    dnnIpList:
+                      -
+                        dnn: "5"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.1"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7334"
+                      -
+                        dnn: "7"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.2"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7335"
+                  -
+                    nssai:
+                      sst: 15
+                      sd: "ABCEEE"
+                    dnnIpList:
+                      -
+                        dnn: "6"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.3"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7336"
+                      -
+                        dnn: "8"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.4"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7337"
+              roamingOdb: "OUTSIDE_HOME_PLMN"
+              ueUsageType: 23
+              rfspIndex: 98
+              subsRegTimer: 102
+              udmSliceData:
+                plmnIdSets:
+                  -
+                    plmnIdSetIdentifier: "12345"
+                    nssai:
+                      defaultSingleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 5
+                            sd: "AAAAAA"
+                        -
+                          dnnListId : "1"
+                          nssai:
+                            sst: 3
+                            sd: "EEEAAA"
+                      singleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 5
+                        -
+                          dnnListId : "4"
+                          nssai:
+                            sst: 4
+                            sd: "ABCCBA"
+                    dnnLists:
+                      -
+                        dnnListId: "1"
+                        dnnDataList:
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: true
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_1"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_2"
+                                -
+                                  "SSC_MODE_1"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV6"
+                              allowedSessionTypes:
+                                -
+                                  "IPV4"
+                            5gQosProfile:
+                              5qi: 235
+                              priorityLevel: 112
+                              arp:
+                                priorityLevel: 13
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+                      -
+                        dnnListId: "4"
+                        dnnDataList:
+                          -
+                            dnn: "DNN4"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: false
+                            iwkEpsInd: true
+                            ladnIndicator: true
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_2"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_2"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 230
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 12
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: false
+                            lboRoamingAllowed: false
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_2"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_1"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 233
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 10
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "IMSI1"
+            notifRef: "notifRef1"
+            imsiMask: "imsiMask1"
+          "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData":
+            udmSliceProfileId:
+              id: "1"
+          "/profiles/udmProfiles/udmSliceProfiles/1":
+            udmSliceProfileId : "1"
+            plmnIdSets:
+              -
+                plmnIdSetIdentifier: "Default"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+                  -
+                    dnnListId: "1"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: true
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV6"
+                          allowedSessionTypes:
+                            -
+                              "IPV4"
+                        5gQosProfile:
+                          5qi: 220
+                          priorityLevel: 105
+                          arp:
+                            priorityLevel: 9
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+              -
+                plmnIdSetIdentifier: "12345"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+                  -
+                    dnnListId: "1"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: true
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV6"
+                          allowedSessionTypes:
+                            -
+                              "IPV4"
+                        5gQosProfile:
+                          5qi: 220
+                          priorityLevel: 105
+                          arp:
+                            priorityLevel: 9
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+              -
+                plmnIdSetIdentifier: "12346"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "There are duplicated SSC modes between in \"defaultSscMode\" and \"allowedSscModes\""
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "There are duplicated SSC modes between in \"defaultSscMode\" and \"allowedSscModes\""
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+  -
+    description:  UdmStaticData with individual NSSAIs and DNNs update error. Two DNNs do not have defaultSessionType in pduSessionTypes
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              subscribedUeAmbr:
+                downlink: "1 Gbps"
+                uplink: "2 Mbps"
+              ratRestrictions:
+                -
+                  "NR"
+                -
+                  "WLAN"
+              forbiddenAreas:
+                -
+                  id: "1"
+              serviceAreaRestriction:
+                restrictionType: "ALLOWED_AREAS"
+                areas:
+                  -
+                    id: "1"
+                maxNumOfTAs: 100
+              coreNetworkTypeRestrictions:
+                -
+                  "5GC"
+                -
+                  "EPC"
+              mpsPriority: true
+              mcsPriority: false
+              dlPacketCount: 3
+              micoAllowed: false
+              staticIpAddress:
+                nssaiDnnIpLists:
+                  -
+                    nssai:
+                      sst: 14
+                      sd: "ABCDEF"
+                    dnnIpList:
+                      -
+                        dnn: "5"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.1"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7334"
+                      -
+                        dnn: "7"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.2"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7335"
+                  -
+                    nssai:
+                      sst: 15
+                      sd: "ABCEEE"
+                    dnnIpList:
+                      -
+                        dnn: "6"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.3"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7336"
+                      -
+                        dnn: "8"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.4"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7337"
+              roamingOdb: "OUTSIDE_HOME_PLMN"
+              ueUsageType: 23
+              rfspIndex: 98
+              subsRegTimer: 102
+              udmSliceData:
+                plmnIdSets:
+                  -
+                    plmnIdSetIdentifier: "12345"
+                    nssai:
+                      defaultSingleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 5
+                            sd: "AAAAAA"
+                        -
+                          dnnListId : "1"
+                          nssai:
+                            sst: 3
+                            sd: "EEEAAA"
+                      singleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 5
+                        -
+                          dnnListId : "4"
+                          nssai:
+                            sst: 4
+                            sd: "ABCCBA"
+                    dnnLists:
+                      -
+                        dnnListId: "1"
+                        dnnDataList:
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: true
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_1"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_2"
+                                -
+                                  "SSC_MODE_3"
+                            pduSessionTypes:
+                              allowedSessionTypes:
+                                -
+                                  "IPV4"
+                            5gQosProfile:
+                              5qi: 235
+                              priorityLevel: 112
+                              arp:
+                                priorityLevel: 13
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+                      -
+                        dnnListId: "4"
+                        dnnDataList:
+                          -
+                            dnn: "DNN4"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: false
+                            iwkEpsInd: true
+                            ladnIndicator: true
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_2"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_1"
+                            pduSessionTypes:
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 230
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 12
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: false
+                            lboRoamingAllowed: false
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_2"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_1"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 233
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 10
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "IMSI1"
+            notifRef: "notifRef1"
+            imsiMask: "imsiMask1"
+          "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData":
+            udmSliceProfileId:
+              id: "1"
+          "/profiles/udmProfiles/udmSliceProfiles/1":
+            udmSliceProfileId : "1"
+            plmnIdSets:
+              -
+                plmnIdSetIdentifier: "Default"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+                  -
+                    dnnListId: "1"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: true
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV6"
+                          allowedSessionTypes:
+                            -
+                              "IPV4"
+                        5gQosProfile:
+                          5qi: 220
+                          priorityLevel: 105
+                          arp:
+                            priorityLevel: 9
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+              -
+                plmnIdSetIdentifier: "12345"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+                  -
+                    dnnListId: "1"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: true
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV6"
+                          allowedSessionTypes:
+                            -
+                              "IPV4"
+                        5gQosProfile:
+                          5qi: 220
+                          priorityLevel: 105
+                          arp:
+                            priorityLevel: 9
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+              -
+                plmnIdSetIdentifier: "12346"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"defaultSessionType\" in \"pduSessionTypes\" is a required Field"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"defaultSessionType\" in \"pduSessionTypes\" is a required Field"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+  -
+    description:  UdmStaticData with individual NSSAIs and DNNs update error. Two DNNs have invalid values for pduSessionTypes
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              subscribedUeAmbr:
+                downlink: "1 Gbps"
+                uplink: "2 Mbps"
+              ratRestrictions:
+                -
+                  "NR"
+                -
+                  "WLAN"
+              forbiddenAreas:
+                -
+                  id: "1"
+              serviceAreaRestriction:
+                restrictionType: "ALLOWED_AREAS"
+                areas:
+                  -
+                    id: "1"
+                maxNumOfTAs: 100
+              coreNetworkTypeRestrictions:
+                -
+                  "5GC"
+                -
+                  "EPC"
+              mpsPriority: true
+              mcsPriority: false
+              dlPacketCount: 3
+              micoAllowed: false
+              staticIpAddress:
+                nssaiDnnIpLists:
+                  -
+                    nssai:
+                      sst: 14
+                      sd: "ABCDEF"
+                    dnnIpList:
+                      -
+                        dnn: "5"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.1"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7334"
+                      -
+                        dnn: "7"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.2"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7335"
+                  -
+                    nssai:
+                      sst: 15
+                      sd: "ABCEEE"
+                    dnnIpList:
+                      -
+                        dnn: "6"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.3"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7336"
+                      -
+                        dnn: "8"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.4"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7337"
+              roamingOdb: "OUTSIDE_HOME_PLMN"
+              ueUsageType: 23
+              rfspIndex: 98
+              subsRegTimer: 102
+              udmSliceData:
+                plmnIdSets:
+                  -
+                    plmnIdSetIdentifier: "12345"
+                    nssai:
+                      defaultSingleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 5
+                            sd: "AAAAAA"
+                        -
+                          dnnListId : "1"
+                          nssai:
+                            sst: 3
+                            sd: "EEEAAA"
+                      singleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 5
+                        -
+                          dnnListId : "4"
+                          nssai:
+                            sst: 4
+                            sd: "ABCCBA"
+                    dnnLists:
+                      -
+                        dnnListId: "1"
+                        dnnDataList:
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: true
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_1"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_2"
+                                -
+                                  "SSC_MODE_3"
+                            pduSessionTypes:
+                              defaultSessionType: "HELLO"
+                              allowedSessionTypes:
+                                -
+                                  "WORLD"
+                            5gQosProfile:
+                              5qi: 235
+                              priorityLevel: 112
+                              arp:
+                                priorityLevel: 13
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+                      -
+                        dnnListId: "4"
+                        dnnDataList:
+                          -
+                            dnn: "DNN4"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: false
+                            iwkEpsInd: true
+                            ladnIndicator: true
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_2"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_1"
+                            pduSessionTypes:
+                              defaultSessionType: "GOOD"
+                              allowedSessionTypes:
+                                -
+                                  "BYE"
+                            5gQosProfile:
+                              5qi: 230
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 12
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: false
+                            lboRoamingAllowed: false
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_2"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_1"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 233
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 10
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "IMSI1"
+            notifRef: "notifRef1"
+            imsiMask: "imsiMask1"
+          "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData":
+            udmSliceProfileId:
+              id: "1"
+          "/profiles/udmProfiles/udmSliceProfiles/1":
+            udmSliceProfileId : "1"
+            plmnIdSets:
+              -
+                plmnIdSetIdentifier: "Default"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+                  -
+                    dnnListId: "1"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: true
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV6"
+                          allowedSessionTypes:
+                            -
+                              "IPV4"
+                        5gQosProfile:
+                          5qi: 220
+                          priorityLevel: 105
+                          arp:
+                            priorityLevel: 9
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+              -
+                plmnIdSetIdentifier: "12345"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+                  -
+                    dnnListId: "1"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: true
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV6"
+                          allowedSessionTypes:
+                            -
+                              "IPV4"
+                        5gQosProfile:
+                          5qi: 220
+                          priorityLevel: 105
+                          arp:
+                            priorityLevel: 9
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+              -
+                plmnIdSetIdentifier: "12346"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"defaultSessionType\" in \"pduSessionTypes\" has an Invalid Value"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"allowedSessionTypes\" in \"pduSessionTypes\" has an Invalid Value"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"defaultSessionType\" in \"pduSessionTypes\" has an Invalid Value"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"allowedSessionTypes\" in \"pduSessionTypes\" has an Invalid Value"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+  -
+    description:  UdmStaticData with individual NSSAIs and DNNs update error. One DNN has repeated values for allowedSessionTypes and defaultSessionType and another one has invalid size for allowedSessionTypes
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              subscribedUeAmbr:
+                downlink: "1 Gbps"
+                uplink: "2 Mbps"
+              ratRestrictions:
+                -
+                  "NR"
+                -
+                  "WLAN"
+              forbiddenAreas:
+                -
+                  id: "1"
+              serviceAreaRestriction:
+                restrictionType: "ALLOWED_AREAS"
+                areas:
+                  -
+                    id: "1"
+                maxNumOfTAs: 100
+              coreNetworkTypeRestrictions:
+                -
+                  "5GC"
+                -
+                  "EPC"
+              mpsPriority: true
+              mcsPriority: false
+              dlPacketCount: 3
+              micoAllowed: false
+              staticIpAddress:
+                nssaiDnnIpLists:
+                  -
+                    nssai:
+                      sst: 14
+                      sd: "ABCDEF"
+                    dnnIpList:
+                      -
+                        dnn: "5"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.1"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7334"
+                      -
+                        dnn: "7"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.2"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7335"
+                  -
+                    nssai:
+                      sst: 15
+                      sd: "ABCEEE"
+                    dnnIpList:
+                      -
+                        dnn: "6"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.3"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7336"
+                      -
+                        dnn: "8"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.4"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7337"
+              roamingOdb: "OUTSIDE_HOME_PLMN"
+              ueUsageType: 23
+              rfspIndex: 98
+              subsRegTimer: 102
+              udmSliceData:
+                plmnIdSets:
+                  -
+                    plmnIdSetIdentifier: "12345"
+                    nssai:
+                      defaultSingleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 5
+                            sd: "AAAAAA"
+                        -
+                          dnnListId : "1"
+                          nssai:
+                            sst: 3
+                            sd: "EEEAAA"
+                      singleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 5
+                        -
+                          dnnListId : "4"
+                          nssai:
+                            sst: 4
+                            sd: "ABCCBA"
+                    dnnLists:
+                      -
+                        dnnListId: "1"
+                        dnnDataList:
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: true
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_1"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_2"
+                                -
+                                  "SSC_MODE_3"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV4"
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 235
+                              priorityLevel: 112
+                              arp:
+                                priorityLevel: 13
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+                      -
+                        dnnListId: "4"
+                        dnnDataList:
+                          -
+                            dnn: "DNN4"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: false
+                            iwkEpsInd: true
+                            ladnIndicator: true
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_2"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_1"
+                            pduSessionTypes:
+                              defaultSessionType: "ETHERNET"
+                              allowedSessionTypes: []
+                            5gQosProfile:
+                              5qi: 230
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 12
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: false
+                            lboRoamingAllowed: false
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_2"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_1"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 233
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 10
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "IMSI1"
+            notifRef: "notifRef1"
+            imsiMask: "imsiMask1"
+          "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData":
+            udmSliceProfileId:
+              id: "1"
+          "/profiles/udmProfiles/udmSliceProfiles/1":
+            udmSliceProfileId : "1"
+            plmnIdSets:
+              -
+                plmnIdSetIdentifier: "Default"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+                  -
+                    dnnListId: "1"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: true
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV6"
+                          allowedSessionTypes:
+                            -
+                              "IPV4"
+                        5gQosProfile:
+                          5qi: 220
+                          priorityLevel: 105
+                          arp:
+                            priorityLevel: 9
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+              -
+                plmnIdSetIdentifier: "12345"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+                  -
+                    dnnListId: "1"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: true
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV6"
+                          allowedSessionTypes:
+                            -
+                              "IPV4"
+                        5gQosProfile:
+                          5qi: 220
+                          priorityLevel: 105
+                          arp:
+                            priorityLevel: 9
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+              -
+                plmnIdSetIdentifier: "12346"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "There are duplicated PDU session types between in \"defaultSessionType\" and \"allowedSessionTypes\""
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"allowedSessionTypes\" in \"pduSessionTypes\" has an Invalid Size"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+  -
+    description:  UdmStaticData with individual NSSAIs and DNNs update error. One DNN has invalid values for 5gQosProfile attributes
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              subscribedUeAmbr:
+                downlink: "1 Gbps"
+                uplink: "2 Mbps"
+              ratRestrictions:
+                -
+                  "NR"
+                -
+                  "WLAN"
+              forbiddenAreas:
+                -
+                  id: "1"
+              serviceAreaRestriction:
+                restrictionType: "ALLOWED_AREAS"
+                areas:
+                  -
+                    id: "1"
+                maxNumOfTAs: 100
+              coreNetworkTypeRestrictions:
+                -
+                  "5GC"
+                -
+                  "EPC"
+              mpsPriority: true
+              mcsPriority: false
+              dlPacketCount: 3
+              micoAllowed: false
+              staticIpAddress:
+                nssaiDnnIpLists:
+                  -
+                    nssai:
+                      sst: 14
+                      sd: "ABCDEF"
+                    dnnIpList:
+                      -
+                        dnn: "5"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.1"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7334"
+                      -
+                        dnn: "7"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.2"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7335"
+                  -
+                    nssai:
+                      sst: 15
+                      sd: "ABCEEE"
+                    dnnIpList:
+                      -
+                        dnn: "6"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.3"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7336"
+                      -
+                        dnn: "8"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.4"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7337"
+              roamingOdb: "OUTSIDE_HOME_PLMN"
+              ueUsageType: 23
+              rfspIndex: 98
+              subsRegTimer: 102
+              udmSliceData:
+                plmnIdSets:
+                  -
+                    plmnIdSetIdentifier: "12345"
+                    nssai:
+                      defaultSingleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 5
+                            sd: "AAAAAA"
+                        -
+                          dnnListId : "1"
+                          nssai:
+                            sst: 3
+                            sd: "EEEAAA"
+                      singleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 5
+                        -
+                          dnnListId : "4"
+                          nssai:
+                            sst: 4
+                            sd: "ABCCBA"
+                    dnnLists:
+                      -
+                        dnnListId: "1"
+                        dnnDataList:
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: true
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_1"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_2"
+                                -
+                                  "SSC_MODE_3"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 300
+                              priorityLevel: 200
+                              arp:
+                                priorityLevel: 100
+                                preemptCap : "HELLO"
+                                preemptVuln: "WORLD"
+                      -
+                        dnnListId: "4"
+                        dnnDataList:
+                          -
+                            dnn: "DNN4"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: false
+                            iwkEpsInd: true
+                            ladnIndicator: true
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_2"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_1"
+                            pduSessionTypes:
+                              defaultSessionType: "ETHERNET"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 230
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 12
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: false
+                            lboRoamingAllowed: false
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_2"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_1"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 233
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 10
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "IMSI1"
+            notifRef: "notifRef1"
+            imsiMask: "imsiMask1"
+          "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData":
+            udmSliceProfileId:
+              id: "1"
+          "/profiles/udmProfiles/udmSliceProfiles/1":
+            udmSliceProfileId : "1"
+            plmnIdSets:
+              -
+                plmnIdSetIdentifier: "Default"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+                  -
+                    dnnListId: "1"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: true
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV6"
+                          allowedSessionTypes:
+                            -
+                              "IPV4"
+                        5gQosProfile:
+                          5qi: 220
+                          priorityLevel: 105
+                          arp:
+                            priorityLevel: 9
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+              -
+                plmnIdSetIdentifier: "12345"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+                  -
+                    dnnListId: "1"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: true
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV6"
+                          allowedSessionTypes:
+                            -
+                              "IPV4"
+                        5gQosProfile:
+                          5qi: 220
+                          priorityLevel: 105
+                          arp:
+                            priorityLevel: 9
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+              -
+                plmnIdSetIdentifier: "12346"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"5qi\" in \"5gQosProfile\" has an Invalid Value"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"priorityLevel\" in \"5gQosProfile\" has an Invalid Value"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"priorityLevel\" in \"arp\" has an Invalid Value"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"preemptCap\" in \"arp\" has an Invalid Value"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"preemptVuln\" in \"arp\" has an Invalid Value"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+  -
+    description:  UdmStaticData with individual NSSAIs and DNNs update error. Two DNNs have invalid format for 3gppChargingCharacteristics
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              subscribedUeAmbr:
+                downlink: "1 Gbps"
+                uplink: "2 Mbps"
+              ratRestrictions:
+                -
+                  "NR"
+                -
+                  "WLAN"
+              forbiddenAreas:
+                -
+                  id: "1"
+              serviceAreaRestriction:
+                restrictionType: "ALLOWED_AREAS"
+                areas:
+                  -
+                    id: "1"
+                maxNumOfTAs: 100
+              coreNetworkTypeRestrictions:
+                -
+                  "5GC"
+                -
+                  "EPC"
+              mpsPriority: true
+              mcsPriority: false
+              dlPacketCount: 3
+              micoAllowed: false
+              staticIpAddress:
+                nssaiDnnIpLists:
+                  -
+                    nssai:
+                      sst: 14
+                      sd: "ABCDEF"
+                    dnnIpList:
+                      -
+                        dnn: "5"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.1"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7334"
+                      -
+                        dnn: "7"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.2"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7335"
+                  -
+                    nssai:
+                      sst: 15
+                      sd: "ABCEEE"
+                    dnnIpList:
+                      -
+                        dnn: "6"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.3"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7336"
+                      -
+                        dnn: "8"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.4"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7337"
+              roamingOdb: "OUTSIDE_HOME_PLMN"
+              ueUsageType: 23
+              rfspIndex: 98
+              subsRegTimer: 102
+              udmSliceData:
+                plmnIdSets:
+                  -
+                    plmnIdSetIdentifier: "12345"
+                    nssai:
+                      defaultSingleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 5
+                            sd: "AAAAAA"
+                        -
+                          dnnListId : "1"
+                          nssai:
+                            sst: 3
+                            sd: "EEEAAA"
+                      singleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 5
+                        -
+                          dnnListId : "4"
+                          nssai:
+                            sst: 4
+                            sd: "ABCCBA"
+                    dnnLists:
+                      -
+                        dnnListId: "1"
+                        dnnDataList:
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: true
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_1"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_2"
+                                -
+                                  "SSC_MODE_3"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 200
+                              priorityLevel: 100
+                              arp:
+                                priorityLevel: 10
+                                preemptCap : "MAY_PREEMPT"
+                                preemptVuln: "PREEMPTABLE"
+                            3gppChargingCharacteristics: "112F"
+                      -
+                        dnnListId: "4"
+                        dnnDataList:
+                          -
+                            dnn: "DNN4"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: false
+                            iwkEpsInd: true
+                            ladnIndicator: true
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_2"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_1"
+                            pduSessionTypes:
+                              defaultSessionType: "ETHERNET"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 230
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 12
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+                            3gppChargingCharacteristics: "TYUP"
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: false
+                            lboRoamingAllowed: false
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_2"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_1"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 233
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 10
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+                            3gppChargingCharacteristics: "ABCDE"
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "IMSI1"
+            notifRef: "notifRef1"
+            imsiMask: "imsiMask1"
+          "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData":
+            udmSliceProfileId:
+              id: "1"
+          "/profiles/udmProfiles/udmSliceProfiles/1":
+            udmSliceProfileId : "1"
+            plmnIdSets:
+              -
+                plmnIdSetIdentifier: "Default"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+                  -
+                    dnnListId: "1"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: true
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV6"
+                          allowedSessionTypes:
+                            -
+                              "IPV4"
+                        5gQosProfile:
+                          5qi: 220
+                          priorityLevel: 105
+                          arp:
+                            priorityLevel: 9
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+              -
+                plmnIdSetIdentifier: "12345"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+                  -
+                    dnnListId: "1"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: true
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV6"
+                          allowedSessionTypes:
+                            -
+                              "IPV4"
+                        5gQosProfile:
+                          5qi: 220
+                          priorityLevel: 105
+                          arp:
+                            priorityLevel: 9
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+              -
+                plmnIdSetIdentifier: "12346"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"3gppChargingCharacteristics\" in \"dnnDataList\" has not the valid format"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"3gppChargingCharacteristics\" in \"dnnDataList\" has not the valid format"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+  -
+    description:  UdmStaticData with individual NSSAIs and DNNs update error. Two DNNs have invalid value for defauldDnnIndicator when DNN="*"
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              subscribedUeAmbr:
+                downlink: "1 Gbps"
+                uplink: "2 Mbps"
+              ratRestrictions:
+                -
+                  "NR"
+                -
+                  "WLAN"
+              forbiddenAreas:
+                -
+                  id: "1"
+              serviceAreaRestriction:
+                restrictionType: "ALLOWED_AREAS"
+                areas:
+                  -
+                    id: "1"
+                maxNumOfTAs: 100
+              coreNetworkTypeRestrictions:
+                -
+                  "5GC"
+                -
+                  "EPC"
+              mpsPriority: true
+              mcsPriority: false
+              dlPacketCount: 3
+              micoAllowed: false
+              staticIpAddress:
+                nssaiDnnIpLists:
+                  -
+                    nssai:
+                      sst: 14
+                      sd: "ABCDEF"
+                    dnnIpList:
+                      -
+                        dnn: "5"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.1"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7334"
+                      -
+                        dnn: "7"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.2"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7335"
+                  -
+                    nssai:
+                      sst: 15
+                      sd: "ABCEEE"
+                    dnnIpList:
+                      -
+                        dnn: "6"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.3"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7336"
+                      -
+                        dnn: "8"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.4"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7337"
+              roamingOdb: "OUTSIDE_HOME_PLMN"
+              ueUsageType: 23
+              rfspIndex: 98
+              subsRegTimer: 102
+              udmSliceData:
+                plmnIdSets:
+                  -
+                    plmnIdSetIdentifier: "12345"
+                    nssai:
+                      defaultSingleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 5
+                            sd: "AAAAAA"
+                        -
+                          dnnListId : "1"
+                          nssai:
+                            sst: 3
+                            sd: "EEEAAA"
+                      singleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 5
+                        -
+                          dnnListId : "4"
+                          nssai:
+                            sst: 4
+                            sd: "ABCCBA"
+                    dnnLists:
+                      -
+                        dnnListId: "1"
+                        dnnDataList:
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: true
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_1"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_2"
+                                -
+                                  "SSC_MODE_3"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 200
+                              priorityLevel: 100
+                              arp:
+                                priorityLevel: 10
+                                preemptCap : "MAY_PREEMPT"
+                                preemptVuln: "PREEMPTABLE"
+                          -
+                            dnn: "*"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: true
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_1"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_2"
+                                -
+                                  "SSC_MODE_3"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 200
+                              priorityLevel: 100
+                              arp:
+                                priorityLevel: 10
+                                preemptCap : "MAY_PREEMPT"
+                                preemptVuln: "PREEMPTABLE"
+                      -
+                        dnnListId: "4"
+                        dnnDataList:
+                          -
+                            dnn: "DNN4"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: false
+                            iwkEpsInd: true
+                            ladnIndicator: true
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_2"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_1"
+                            pduSessionTypes:
+                              defaultSessionType: "ETHERNET"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 230
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 12
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: false
+                            lboRoamingAllowed: false
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_2"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_1"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 233
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 10
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+                          -
+                            dnn: "*"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: true
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_1"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_2"
+                                -
+                                  "SSC_MODE_3"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 200
+                              priorityLevel: 100
+                              arp:
+                                priorityLevel: 10
+                                preemptCap : "MAY_PREEMPT"
+                                preemptVuln: "PREEMPTABLE"
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "IMSI1"
+            notifRef: "notifRef1"
+            imsiMask: "imsiMask1"
+          "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData":
+            udmSliceProfileId:
+              id: "1"
+          "/profiles/udmProfiles/udmSliceProfiles/1":
+            udmSliceProfileId : "1"
+            plmnIdSets:
+              -
+                plmnIdSetIdentifier: "Default"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+                  -
+                    dnnListId: "1"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: true
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV6"
+                          allowedSessionTypes:
+                            -
+                              "IPV4"
+                        5gQosProfile:
+                          5qi: 220
+                          priorityLevel: 105
+                          arp:
+                            priorityLevel: 9
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+              -
+                plmnIdSetIdentifier: "12345"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+                  -
+                    dnnListId: "1"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: true
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV6"
+                          allowedSessionTypes:
+                            -
+                              "IPV4"
+                        5gQosProfile:
+                          5qi: 220
+                          priorityLevel: 105
+                          arp:
+                            priorityLevel: 9
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+              -
+                plmnIdSetIdentifier: "12346"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"defaultDnnIndicator\" in \"dnnDataList\" cannot be set to true when \"dnn\" is \"*\""
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"defaultDnnIndicator\" in \"dnnDataList\" cannot be set to true when \"dnn\" is \"*\""
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+  -
+    description:  UdmStaticData with individual NSSAIs and DNNs update error. nssaiDetails do not include the nssai attribute
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              subscribedUeAmbr:
+                downlink: "1 Gbps"
+                uplink: "2 Mbps"
+              ratRestrictions:
+                -
+                  "NR"
+                -
+                  "WLAN"
+              forbiddenAreas:
+                -
+                  id: "1"
+              serviceAreaRestriction:
+                restrictionType: "ALLOWED_AREAS"
+                areas:
+                  -
+                    id: "1"
+                maxNumOfTAs: 100
+              coreNetworkTypeRestrictions:
+                -
+                  "5GC"
+                -
+                  "EPC"
+              mpsPriority: true
+              mcsPriority: false
+              dlPacketCount: 3
+              micoAllowed: false
+              staticIpAddress:
+                nssaiDnnIpLists:
+                  -
+                    nssai:
+                      sst: 14
+                      sd: "ABCDEF"
+                    dnnIpList:
+                      -
+                        dnn: "5"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.1"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7334"
+                      -
+                        dnn: "7"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.2"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7335"
+                  -
+                    nssai:
+                      sst: 15
+                      sd: "ABCEEE"
+                    dnnIpList:
+                      -
+                        dnn: "6"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.3"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7336"
+                      -
+                        dnn: "8"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.4"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7337"
+              roamingOdb: "OUTSIDE_HOME_PLMN"
+              ueUsageType: 23
+              rfspIndex: 98
+              subsRegTimer: 102
+              udmSliceData:
+                plmnIdSets:
+                  -
+                    plmnIdSetIdentifier: "12345"
+                    nssai:
+                      defaultSingleNssais:
+                        -
+                          dnnListId : "Default"
+                        -
+                          dnnListId : "1"
+                          nssai:
+                            sst: 3
+                            sd: "EEEAAA"
+                      singleNssais:
+                        -
+                          dnnListId : "Default"
+                        -
+                          dnnListId : "4"
+                    dnnLists:
+                      -
+                        dnnListId: "1"
+                        dnnDataList:
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: true
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_1"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_2"
+                                -
+                                  "SSC_MODE_3"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 200
+                              priorityLevel: 100
+                              arp:
+                                priorityLevel: 10
+                                preemptCap : "MAY_PREEMPT"
+                                preemptVuln: "PREEMPTABLE"
+                      -
+                        dnnListId: "4"
+                        dnnDataList:
+                          -
+                            dnn: "DNN4"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: false
+                            iwkEpsInd: true
+                            ladnIndicator: true
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_2"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_1"
+                            pduSessionTypes:
+                              defaultSessionType: "ETHERNET"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 230
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 12
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: false
+                            lboRoamingAllowed: false
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_2"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_1"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 233
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 10
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "IMSI1"
+            notifRef: "notifRef1"
+            imsiMask: "imsiMask1"
+          "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData":
+            udmSliceProfileId:
+              id: "1"
+          "/profiles/udmProfiles/udmSliceProfiles/1":
+            udmSliceProfileId : "1"
+            plmnIdSets:
+              -
+                plmnIdSetIdentifier: "Default"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+                  -
+                    dnnListId: "1"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: true
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV6"
+                          allowedSessionTypes:
+                            -
+                              "IPV4"
+                        5gQosProfile:
+                          5qi: 220
+                          priorityLevel: 105
+                          arp:
+                            priorityLevel: 9
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+              -
+                plmnIdSetIdentifier: "12345"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+                  -
+                    dnnListId: "1"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: true
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV6"
+                          allowedSessionTypes:
+                            -
+                              "IPV4"
+                        5gQosProfile:
+                          5qi: 220
+                          priorityLevel: 105
+                          arp:
+                            priorityLevel: 9
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+              -
+                plmnIdSetIdentifier: "12346"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "Mandatory field:[nssai] not found as child of:[defaultSingleNssais]"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "Mandatory field:[nssai] not found as child of:[singleNssais]"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "Mandatory field:[nssai] not found as child of:[singleNssais]"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+  -
+    description:  UdmStaticData with individual NSSAIs and DNNs update error. There are repeated nssais
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              subscribedUeAmbr:
+                downlink: "1 Gbps"
+                uplink: "2 Mbps"
+              ratRestrictions:
+                -
+                  "NR"
+                -
+                  "WLAN"
+              forbiddenAreas:
+                -
+                  id: "1"
+              serviceAreaRestriction:
+                restrictionType: "ALLOWED_AREAS"
+                areas:
+                  -
+                    id: "1"
+                maxNumOfTAs: 100
+              coreNetworkTypeRestrictions:
+                -
+                  "5GC"
+                -
+                  "EPC"
+              mpsPriority: true
+              mcsPriority: false
+              dlPacketCount: 3
+              micoAllowed: false
+              staticIpAddress:
+                nssaiDnnIpLists:
+                  -
+                    nssai:
+                      sst: 14
+                      sd: "ABCDEF"
+                    dnnIpList:
+                      -
+                        dnn: "5"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.1"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7334"
+                      -
+                        dnn: "7"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.2"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7335"
+                  -
+                    nssai:
+                      sst: 15
+                      sd: "ABCEEE"
+                    dnnIpList:
+                      -
+                        dnn: "6"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.3"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7336"
+                      -
+                        dnn: "8"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.4"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7337"
+              roamingOdb: "OUTSIDE_HOME_PLMN"
+              ueUsageType: 23
+              rfspIndex: 98
+              subsRegTimer: 102
+              udmSliceData:
+                plmnIdSets:
+                  -
+                    plmnIdSetIdentifier: "12345"
+                    nssai:
+                      defaultSingleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 4
+                            sd: "aaabbb"
+                        -
+                          dnnListId : "1"
+                          nssai:
+                            sst: 3
+                            sd: "EEEAAA"
+                      singleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 3
+                            sd: "eeeaaa"
+                        -
+                          dnnListId : "4"
+                          nssai:
+                            sst: 4
+                            sd: "AAABBB"
+                    dnnLists:
+                      -
+                        dnnListId: "1"
+                        dnnDataList:
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: true
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_1"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_2"
+                                -
+                                  "SSC_MODE_3"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 200
+                              priorityLevel: 100
+                              arp:
+                                priorityLevel: 10
+                                preemptCap : "MAY_PREEMPT"
+                                preemptVuln: "PREEMPTABLE"
+                      -
+                        dnnListId: "4"
+                        dnnDataList:
+                          -
+                            dnn: "DNN4"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: false
+                            iwkEpsInd: true
+                            ladnIndicator: true
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_2"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_1"
+                            pduSessionTypes:
+                              defaultSessionType: "ETHERNET"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 230
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 12
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: false
+                            lboRoamingAllowed: false
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_2"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_1"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 233
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 10
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "IMSI1"
+            notifRef: "notifRef1"
+            imsiMask: "imsiMask1"
+          "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData":
+            udmSliceProfileId:
+              id: "1"
+          "/profiles/udmProfiles/udmSliceProfiles/1":
+            udmSliceProfileId : "1"
+            plmnIdSets:
+              -
+                plmnIdSetIdentifier: "Default"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+                  -
+                    dnnListId: "1"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: true
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV6"
+                          allowedSessionTypes:
+                            -
+                              "IPV4"
+                        5gQosProfile:
+                          5qi: 220
+                          priorityLevel: 105
+                          arp:
+                            priorityLevel: 9
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+              -
+                plmnIdSetIdentifier: "12345"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+                  -
+                    dnnListId: "1"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: true
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV6"
+                          allowedSessionTypes:
+                            -
+                              "IPV4"
+                        5gQosProfile:
+                          5qi: 220
+                          priorityLevel: 105
+                          arp:
+                            priorityLevel: 9
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+              -
+                plmnIdSetIdentifier: "12346"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "There are \"nssai\" repeated in the \"nssai\" attribute"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "There are \"nssai\" repeated in the \"nssai\" attribute"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"

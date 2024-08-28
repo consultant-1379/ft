@@ -1,0 +1,77 @@
+description: Provisioning Validator, operations over a resource when associated slice profile is not part of relatedResources
+
+steps:
+  -
+    description:  Create error. Associated slice profile is not part of relatedResources
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              forbiddenAreas:
+                -
+                  id: "22"
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "0034661234567"
+          "/profiles/udmProfiles/udmSliceProfiles/2":
+            udmSliceProfileId : "2"
+          "/profiles/udmProfiles/udmSliceProfiles/3":
+            udmSliceProfileId : "3"
+      content_type: application/json
+      expected_response:
+        code: 422
+        schema: udm//ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Unprocessable entity"
+              errorDetails:
+                description: "UdmSliceProfile with id=1 for subscriber mscId=2208a not included as relatedResource."
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+  -
+    description:  Update error. Associated slice profile is not part of relatedResources
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              forbiddenAreas:
+                -
+                  id: "22"
+        relatedResources:
+          "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData":
+            udmSliceProfileId:
+                id: "1"
+            forbiddenAreas:
+              -
+                id: "1"
+          "/profiles/udmProfiles/udmSliceProfiles/2":
+            udmSliceProfileId : "2"
+      content_type: application/json
+      expected_response:
+        code: 422
+        schema: udm//ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Unprocessable entity"
+              errorDetails:
+                description: "UdmSliceProfile with id=1 for subscriber mscId=2208a not included as relatedResource."
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"

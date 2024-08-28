@@ -1,0 +1,62 @@
+description: AuthSubscription object, Creation with VendorSpecific
+steps:
+  -
+    description:  AuthSubscription creation success, authenticationMethod is 5G_AKA, conditional fields are present.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              a4KeyV: "12"
+              vendorSpecific-0001:
+                vendorSpecific1:
+                  -
+                    vendor1
+                  -
+                    vendor2
+                  -
+                    vendor3
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        data:
+          changes:
+            -
+              operation: "CREATE"
+              resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+              data:                
+                authenticationMethod : "5G_AKA"
+                encPermanentKey : "2200AA34D40C090D6D4C3B7763854AFB"
+                authenticationManagementField: "B9B9"
+                algorithmId: "11"
+                a4KeyInd: "1"
+                a4Ind: "2"
+                a4KeyV: "12"
+                vendorSpecific-0001:
+                  vendorSpecific1:
+                    -
+                      vendor1
+                    -
+                      vendor2
+                    -
+                      vendor3
+            -
+              operation: "CREATE"
+              resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionDynamicData"
+              data:
+                sqnScheme: "NON_TIME_BASED"
+                sqn: "000000000000"
+                lastIndexes: {}
+        content_type: application/json

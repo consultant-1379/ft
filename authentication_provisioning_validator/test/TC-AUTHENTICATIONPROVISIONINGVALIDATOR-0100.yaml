@@ -1,0 +1,654 @@
+description: AuthSubscription object, Check format and supported values on creation
+
+steps:
+  -
+    description:  AuthSubscription creation error, imsi format error.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345678/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "AUTH_METHOD"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"imsi\" in \"resource_path\" has not the valid format"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345678/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, authenticationMethod invalid value.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "AUTH_METHOD"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"authenticationMethod\" in \"authSubscriptionStaticData\" has not the valid format"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, encPermanentKey invalid value.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "HELLO"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"encPermanentKey\" in \"authSubscriptionStaticData\" has invalid value"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, authenticationManagementField invalid value.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B91"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"authenticationManagementField\" in \"authSubscriptionStaticData\" has invalid value"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, algorithmId invalid value.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "AA"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"algorithmId\" in \"authSubscriptionStaticData\" has invalid value"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, a4KeyInd invalid value.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "A"
+              a4Ind: "2"
+              encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"a4KeyInd\" in \"authSubscriptionStaticData\" has invalid value"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, a4KeyInd invalid value(out of range).
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "522"
+              a4Ind: "2"
+              encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"a4KeyInd\" in \"authSubscriptionStaticData\" has invalid value"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, a4Ind invalid value.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "A"
+              encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"a4Ind\" in \"authSubscriptionStaticData\" has invalid value"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, a4Ind invalid value(out of range).
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "6"
+              encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"a4Ind\" in \"authSubscriptionStaticData\" has invalid value"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, a4Ind invalid size (maximum length allowed is 3).
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2345"
+              encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"a4Ind\" in \"authSubscriptionStaticData\" has invalid value"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, encOpcKey invalid value.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              encOpcKey: "HELLO"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"encOpcKey\" in \"authSubscriptionStaticData\" has invalid value"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, encOpcKey with algorithmId not milenage(0,2-15).
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "1"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"encOpcKey\" in \"authSubscriptionStaticData\" must not be present as \"algorithmId\" is not MILLENAGE (0,2-15)"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, a4KeyV invalid value.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+              a4KeyV: "A"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"a4KeyV\" in \"authSubscriptionStaticData\" has invalid value"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, a4KeyV value is below allowed range.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+              a4KeyV: "-1"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"a4KeyV\" in \"authSubscriptionStaticData\" has invalid value"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, a4KeyV value is above allowed range.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+              a4KeyV: "33"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"a4KeyV\" in \"authSubscriptionStaticData\" has invalid value"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, akaAlgorithmInd invalid value.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              a4KeyV: "12"
+              akaAlgorithmInd: "B"
+              vendorSpecific-0001:
+                vendorSpecific1:
+                  -
+                    vendor1
+                  -
+                    vendor2
+                  -
+                    vendor3
+        relatedResources:
+          "/legacy/serv=Auth/IMSI=123456789012345":
+            SQNPS: "4"
+            VNUMBER: 0
+            AKAALGIND: 2
+            AKATYPE: 1
+            A4IND: 2
+            IMSI: "123456789012345"
+            GAP: "::AgAFDhAQ"
+            SQNCS: "4"
+            objectClass: "AU1"
+            SQNIMS: "13"
+            EKI: "2200AA34D40C090D6D4C3B7763854AFB"
+            BNS: "1"
+            SQNEPS: "11"
+            A3A8IND: "15"
+            AMFVALUE: 47545
+            GAPSIGN: "1"
+            FSETIND: 11
+            CDC: "122"
+            KIND: 1
+            SQN: "0"
+            EOPC: "7AF98A06EA86AB8B3377D27AE089A3B4"
+          "/subscribers/123abc/journal/provJournal":
+            imsiMask: "0b0000000000010000"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"akaAlgorithmInd\" in \"authSubscriptionStaticData\" has invalid value"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, akaAlgorithmInd invalid value, value is below range.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              a4KeyV: "12"
+              akaAlgorithmInd: "-1"
+              vendorSpecific-0001:
+                vendorSpecific1:
+                  -
+                    vendor1
+                  -
+                    vendor2
+                  -
+                    vendor3
+        relatedResources:
+          "/legacy/serv=Auth/IMSI=123456789012345":
+            SQNPS: "4"
+            VNUMBER: 0
+            AKAALGIND: 2
+            AKATYPE: 1
+            A4IND: 2
+            IMSI: "123456789012345"
+            GAP: "::AgAFDhAQ"
+            SQNCS: "4"
+            objectClass: "AU1"
+            SQNIMS: "13"
+            EKI: "2200AA34D40C090D6D4C3B7763854AFB"
+            BNS: "1"
+            SQNEPS: "11"
+            A3A8IND: "15"
+            AMFVALUE: 47545
+            GAPSIGN: "1"
+            FSETIND: 11
+            CDC: "122"
+            KIND: 1
+            SQN: "0"
+            EOPC: "7AF98A06EA86AB8B3377D27AE089A3B4"
+          "/subscribers/123abc/journal/provJournal":
+            imsiMask: "0b0000000000010000"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"akaAlgorithmInd\" in \"authSubscriptionStaticData\" has invalid value"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"  
+  -
+    description:  AuthSubscription creation error, akaAlgorithmInd invalid value, value is above range.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              a4KeyV: "12"
+              akaAlgorithmInd: "3"
+              vendorSpecific-0001:
+                vendorSpecific1:
+                  -
+                    vendor1
+                  -
+                    vendor2
+                  -
+                    vendor3
+        relatedResources:
+          "/legacy/serv=Auth/IMSI=123456789012345":
+            SQNPS: "4"
+            VNUMBER: 0
+            AKAALGIND: 2
+            AKATYPE: 1
+            A4IND: 2
+            IMSI: "123456789012345"
+            GAP: "::AgAFDhAQ"
+            SQNCS: "4"
+            objectClass: "AU1"
+            SQNIMS: "13"
+            EKI: "2200AA34D40C090D6D4C3B7763854AFB"
+            BNS: "1"
+            SQNEPS: "11"
+            A3A8IND: "15"
+            AMFVALUE: 47545
+            GAPSIGN: "1"
+            FSETIND: 11
+            CDC: "122"
+            KIND: 1
+            SQN: "0"
+            EOPC: "7AF98A06EA86AB8B3377D27AE089A3B4"
+          "/subscribers/123abc/journal/provJournal":
+            imsiMask: "0b0000000000010000"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"akaAlgorithmInd\" in \"authSubscriptionStaticData\" has invalid value"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"

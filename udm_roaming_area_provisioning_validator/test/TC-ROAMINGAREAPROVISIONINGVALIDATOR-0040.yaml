@@ -1,0 +1,25 @@
+description: Provisioning Validator, Roaming Area Delete success case
+
+steps:
+  -
+    description:  Roaming Area Delete success.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "DELETE"
+            resource_path: "/profiles/udmProfiles/udmRoamingAreas/1234"
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        data:
+          changes:
+            -
+              operation: "DELETE"
+              resource_path: "/profiles/udmProfiles/udmRoamingAreas/1234"
+        content_type: application/json
+

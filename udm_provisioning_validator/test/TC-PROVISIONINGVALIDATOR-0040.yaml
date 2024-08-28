@@ -1,0 +1,91 @@
+description: Provisioning validator, several changes within same POST operation. Different results for each change.
+
+steps:
+  -
+    description: UdmStaticData with different changes with different errors. Expected response should be higher error code and the list of all errors
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              subscribedUeAmbr:
+                downlink: "1 Gbps"
+                uplink: "2 Gbps"
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/2209b/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              ratRestrictions:
+                -
+                  NS
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/2207c/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              serviceAreaRestriction:
+                restrictionType: "ALLOWED_AREAS"
+                areas:
+                  -
+                    id: "1"
+                  -
+                    id: "2"
+          -
+            operation: "UPDATE"
+            resource_path : "/subscribers/2208d/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              serviceAreaRestriction:
+                restrictionType: "ALLOWED_AREAS"
+                areas:
+                  -
+                    id: "1"
+        relatedResources:
+            "/subscribers/2208a/journal/provJournal":
+              imsi: "IMSI2"
+              notifRef: "notifRef2"
+              imsiMask: "imsiMask2"
+            "/subscribers/2209b/journal/provJournal":
+              imsi: "IMSI1"
+              notifRef: "notifRef1"
+              imsiMask: "imsiMask1"
+            "/subscribers/2207c/journal/provJournal":
+              imsi: "IMSI3"
+              notifRef: "notifRef1"
+              imsiMask: "imsiMask1"
+            "/profiles/udmProfiles/udmSliceProfiles/1":
+              udmSliceProfileId : "1"
+      content_type: application/json
+      expected_response:
+          code: 422
+          schema: udm/ProblemDetails
+          content_type: application/json
+          data:
+            errors:
+              -
+                errorMessage: Constraint Violation
+                errorDetails:
+                  description:  "\"ratRestrictions\" has an Invalid Value"
+                  resource_path: "/subscribers/2209b/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+              -
+                errorMessage: Constraint Violation
+                errorDetails:
+                  description: "Only one reference to an udmRoamingArea allowed in \"serviceAreaRestriction\""
+                  resource_path: "/subscribers/2207c/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+              -
+                errorMessage: Unprocessable entity
+                errorDetails:
+                  description: "There is no associated relatedResource: /subscribers/2208d/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+                  resource_path: "/subscribers/2208d/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+

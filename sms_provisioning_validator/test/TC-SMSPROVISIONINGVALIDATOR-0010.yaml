@@ -1,0 +1,74 @@
+description: Provisioning Validator, SmsStaticData creation success case
+
+steps:
+  -
+    description: SmsStaticData creation success with all optional attributes
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: true
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: false
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "21405612345678"
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        data:
+          changes:
+            -
+              operation: "CREATE"
+              resource_path : "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+              data:
+                smsSubscriptionData:
+                  smsSubscribed: true
+                smsManagementSubscriptionData:
+                  mtSmsSubscribed: true
+                  mtSmsBarringAll: false
+                  mtSmsBarringRoaming: false
+                  moSmsSubscribed: false
+                  moSmsBarringAll: false
+                  moSmsBarringRoaming: false
+        content_type: application/json
+
+  -
+    description: SmsStaticData creation success with none optional attribute
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data: {}
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "21405612345678"
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        data:
+          changes:
+            -
+              operation: "CREATE"
+              resource_path : "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+              data: {}
+        content_type: application/json

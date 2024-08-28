@@ -1,0 +1,387 @@
+description: Profile Provisioning Validator, Profile update error case, there are no duplicated SSC modes in allowedSscModes and there are no duplicated SSC modes between allowedSscModes and defaultSscMode
+
+steps:
+  -
+    description:  Profile update error. No duplicated SSC modes in allowedSscModes
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path : "/profiles/udmProfiles/udmSliceProfiles/1111"
+            data:
+              udmSliceProfileId : "profile1"
+              plmnIdSets:
+                -
+                  plmnIdSetIdentifier: "Default"
+                  nssai:
+                    defaultSingleNssais:
+                      -
+                        dnnListId : "Default"
+                        nssai:
+                          sst: 3
+                          sd: "ABCDEF"
+                    singleNssais:
+                      -
+                        dnnListId : "Default"
+                        nssai:
+                          sst: 4
+                  dnnLists:
+                    -
+                      dnnListId: "Default"
+                      dnnDataList:
+                        -
+                          dnn: "Default"
+                          defaultDnnIndicator: true
+                          lboRoamingAllowed: false
+                          iwkEpsInd: false
+                          ladnIndicator: false
+                          sscModes:
+                            defaultSscMode: "SSC_MODE_1"
+                            allowedSscModes:
+                              -
+                                "SSC_MODE_2"
+                              -
+                                "SSC_MODE_2"
+                          pduSessionTypes:
+                            defaultSessionType: "IPV4"
+                            allowedSessionTypes:
+                              -
+                                "IPV6"
+                          5gQosProfile:
+                            5qi: 233
+                            priorityLevel: 110
+                            arp:
+                              priorityLevel: 11
+                              preemptCap : "NOT_PREEMPT"
+                              preemptVuln: "NOT_PREEMPTABLE"
+        relatedResources:
+          /profiles/udmProfiles/udmSliceProfiles/1111:
+            udmSliceProfileId : "profile1"
+            plmnIdSets:
+              -
+                plmnIdSetIdentifier: "Default"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "There are duplicated SSC modes between in \"defaultSscMode\" and \"allowedSscModes\""
+                resource_path: "/profiles/udmProfiles/udmSliceProfiles/1111"
+  -
+    description:  Profile update error. No duplicated SSC modes between allowedSscModes and defaultSscMode
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path : "/profiles/udmProfiles/udmSliceProfiles/1111"
+            data:
+              udmSliceProfileId : "profile1"
+              plmnIdSets:
+                -
+                  plmnIdSetIdentifier: "Default"
+                  nssai:
+                    defaultSingleNssais:
+                      -
+                        dnnListId : "Default"
+                        nssai:
+                          sst: 3
+                          sd: "ABCDEF"
+                    singleNssais:
+                      -
+                        dnnListId : "Default"
+                        nssai:
+                          sst: 4
+                  dnnLists:
+                    -
+                      dnnListId: "Default"
+                      dnnDataList:
+                        -
+                          dnn: "Default"
+                          defaultDnnIndicator: true
+                          lboRoamingAllowed: false
+                          iwkEpsInd: false
+                          ladnIndicator: false
+                          sscModes:
+                            defaultSscMode: "SSC_MODE_1"
+                            allowedSscModes:
+                              -
+                                "SSC_MODE_1"
+                          pduSessionTypes:
+                            defaultSessionType: "IPV4"
+                            allowedSessionTypes:
+                              -
+                                "IPV6"
+                          5gQosProfile:
+                            5qi: 233
+                            priorityLevel: 110
+                            arp:
+                              priorityLevel: 11
+                              preemptCap : "NOT_PREEMPT"
+                              preemptVuln: "NOT_PREEMPTABLE"
+        relatedResources:
+          /profiles/udmProfiles/udmSliceProfiles/1111:
+            udmSliceProfileId : "profile1"
+            plmnIdSets:
+              -
+                plmnIdSetIdentifier: "Default"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "There are duplicated SSC modes between in \"defaultSscMode\" and \"allowedSscModes\""
+                resource_path: "/profiles/udmProfiles/udmSliceProfiles/1111"
+  -
+    description:  Profile update success. No duplicated modes in allowedSscModes or between allowedSscModes and defaultSscMode
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path : "/profiles/udmProfiles/udmSliceProfiles/1111"
+            data:
+              udmSliceProfileId : "profile1"
+              plmnIdSets:
+                -
+                  plmnIdSetIdentifier: "Default"
+                  nssai:
+                    defaultSingleNssais:
+                      -
+                        dnnListId : "Default"
+                        nssai:
+                          sst: 3
+                          sd: "ABCDEF"
+                    singleNssais:
+                      -
+                        dnnListId : "Default"
+                        nssai:
+                          sst: 4
+                  dnnLists:
+                    -
+                      dnnListId: "Default"
+                      dnnDataList:
+                        -
+                          dnn: "Default"
+                          defaultDnnIndicator: true
+                          lboRoamingAllowed: false
+                          iwkEpsInd: false
+                          ladnIndicator: false
+                          sscModes:
+                            defaultSscMode: "SSC_MODE_1"
+                            allowedSscModes:
+                              -
+                                "SSC_MODE_2"
+                              -
+                                "SSC_MODE_3"
+                          pduSessionTypes:
+                            defaultSessionType: "IPV4"
+                            allowedSessionTypes:
+                              -
+                                "IPV6"
+                          5gQosProfile:
+                            5qi: 233
+                            priorityLevel: 110
+                            arp:
+                              priorityLevel: 11
+                              preemptCap : "NOT_PREEMPT"
+                              preemptVuln: "NOT_PREEMPTABLE"
+        relatedResources:
+          /profiles/udmProfiles/udmSliceProfiles/1111:
+            udmSliceProfileId : "profile1"
+            plmnIdSets:
+              -
+                plmnIdSetIdentifier: "Default"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        content_type: application/json
+        data:
+          changes:
+            -
+              operation: "UPDATE"
+              resource_path : "/profiles/udmProfiles/udmSliceProfiles/1111"
+              data:
+                udmSliceProfileId : "profile1"
+                plmnIdSets:
+                  -
+                    plmnIdSetIdentifier: "Default"
+                    nssai:
+                      defaultSingleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 3
+                            sd: "ABCDEF"
+                      singleNssais:
+                        -
+                          dnnListId : "Default"
+                          nssai:
+                            sst: 4
+                    dnnLists:
+                      -
+                        dnnListId: "Default"
+                        dnnDataList:
+                          -
+                            dnn: "Default"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: false
+                            iwkEpsInd: false
+                            ladnIndicator: false
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_1"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_2"
+                                -
+                                  "SSC_MODE_3"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV6"
+                            5gQosProfile:
+                              5qi: 233
+                              priorityLevel: 110
+                              arp:
+                                priorityLevel: 11
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"

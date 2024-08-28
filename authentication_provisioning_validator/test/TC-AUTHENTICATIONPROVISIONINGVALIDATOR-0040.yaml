@@ -1,0 +1,105 @@
+description: AuthSubscription object, several changes in the same operation
+
+steps:
+  -
+    description: AuthSubscription creation, update and delete, different subscriptions success case.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path: "/subscribers/111abc/authSubscription/imsi-123456789054321/authSubscriptionStaticData"
+            data:
+              authenticationMethod: "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+          -
+            operation: "DELETE"
+            resource_path : "/subscribers/113abc/authSubscription/imsi-123456789012344"
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod: "EAP_AKA_PRIME"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+        relatedResources:
+          "/legacy/serv=Auth/IMSI=123456789012345":
+            SQNPS: "4"
+            VNUMBER: "0"
+            AKAALGIND: "0"
+            AKATYPE: 1
+            A4IND: 2
+            IMSI: "123456789012345"
+            GAP: "::AgAFDhAQ"
+            SQNCS: "4"
+            objectClass: "AU1"
+            SQNIMS: "13"
+            EKI: "2200AA34D40C090D6D4C3B7763854AFB"
+            BNS: "1"
+            SQNEPS: "11"
+            A3A8IND: "15"
+            AMFVALUE: 47545
+            GAPSIGN: "1"
+            FSETIND: 11
+            CDC: "122"
+            KIND: 1
+            SQN: "0"
+          "/subscribers/123abc/authSubscription":
+              "imsi-123456789012345":
+                authSubscriptionStaticData:
+                  authenticationMethod: "5G_AKA"
+                  encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+                  authenticationManagementField: "B9B9"
+                  algorithmId: "11"
+                  a4KeyInd: "1"
+                  a4Ind: "2"
+                authSubscriptionDynamicData:
+                  sqnScheme: "GENERAL"
+                  sqn: "111111111111"
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        data:
+          changes:
+            -
+              operation: "CREATE"
+              resource_path : "/subscribers/111abc/authSubscription/imsi-123456789054321/authSubscriptionStaticData"
+              data:
+                authenticationMethod : "5G_AKA"
+                encPermanentKey : "2200AA34D40C090D6D4C3B7763854AFB"
+                authenticationManagementField: "B9B9"
+                algorithmId: "11"
+                a4KeyInd: "1"
+                a4Ind: "2"
+            -
+              operation: "CREATE"
+              resource_path : "/subscribers/111abc/authSubscription/imsi-123456789054321/authSubscriptionDynamicData"
+              data:
+                sqnScheme: "NON_TIME_BASED"
+                lastIndexes: {}
+                sqn: "000000000000"
+            -
+              operation: "DELETE"
+              resource_path : "/subscribers/113abc/authSubscription/imsi-123456789012344"
+            -
+              operation: "UPDATE"
+              resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+              data:
+                authenticationMethod : "EAP_AKA_PRIME"
+                encPermanentKey : "2200AA34D40C090D6D4C3B7763854AFB"
+                authenticationManagementField: "B9B9"
+                algorithmId: "11"
+                a4KeyInd: "1"
+                a4Ind: "2"
+        content_type: application/json

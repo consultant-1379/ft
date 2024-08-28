@@ -1,0 +1,427 @@
+description: Profile Provisioning Validator, Profile update error case, plmnIdSetIdentifier rules
+
+steps:
+  -
+    description:  Profile update error. Default plmnIdSetIdentifier must exist.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path : "/profiles/udmProfiles/udmSliceProfiles/1111"
+            data:
+              udmSliceProfileId : "profile1"
+              plmnIdSets:
+                -
+                  plmnIdSetIdentifier: "12345"
+                  nssai:
+                    defaultSingleNssais:
+                      -
+                        dnnListId : "Default"
+                        nssai:
+                          sst: 3
+                          sd: "ABCDEF"
+                    singleNssais:
+                      -
+                        dnnListId : "Default"
+                        nssai:
+                          sst: 4
+                  dnnLists:
+                    -
+                      dnnListId: "Default"
+                      dnnDataList:
+                        -
+                          dnn: "Default"
+                          defaultDnnIndicator: true
+                          lboRoamingAllowed: false
+                          iwkEpsInd: false
+                          ladnIndicator: false
+                          sscModes:
+                            defaultSscMode: "SSC_MODE_1"
+                            allowedSscModes:
+                              -
+                                "SSC_MODE_2"
+                          pduSessionTypes:
+                            defaultSessionType: "IPV4"
+                            allowedSessionTypes:
+                              -
+                                "IPV6"
+                          5gQosProfile:
+                            5qi: 233
+                            priorityLevel: 110
+                            arp:
+                              priorityLevel: 11
+                              preemptCap : "NOT_PREEMPT"
+                              preemptVuln: "NOT_PREEMPTABLE"
+        relatedResources:
+          /profiles/udmProfiles/udmSliceProfiles/1111:
+            udmSliceProfileId : "profile1"
+            plmnIdSets:
+              -
+                plmnIdSetIdentifier: "Default"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "At least a \"plmnIdSetIdentifier\" with \"Default\" value must exist"
+                resource_path: "/profiles/udmProfiles/udmSliceProfiles/1111"
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "\"dnnListId\"=\"Default\" cannot be deleted for \"plmnIdSetIdentifier\"=\"Default\""
+                resource_path: "/profiles/udmProfiles/udmSliceProfiles/1111"
+  -
+    description:  Profile update error. plmnIdSetIdentifier invalid value.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path : "/profiles/udmProfiles/udmSliceProfiles/1111"
+            data:
+              udmSliceProfileId : "profile1"
+              plmnIdSets:
+                -
+                  plmnIdSetIdentifier: "id12"
+                  nssai:
+                    defaultSingleNssais:
+                      -
+                        dnnListId : "Default"
+                        nssai:
+                          sst: 3
+                          sd: "ABCDEF"
+                    singleNssais:
+                      -
+                        dnnListId : "Default"
+                        nssai:
+                          sst: 4
+                  dnnLists:
+                    -
+                      dnnListId: "Default"
+                      dnnDataList:
+                        -
+                          dnn: "Default"
+                          defaultDnnIndicator: true
+                          lboRoamingAllowed: false
+                          iwkEpsInd: false
+                          ladnIndicator: false
+                          sscModes:
+                            defaultSscMode: "SSC_MODE_1"
+                            allowedSscModes:
+                              -
+                                "SSC_MODE_2"
+                          pduSessionTypes:
+                            defaultSessionType: "IPV4"
+                            allowedSessionTypes:
+                              -
+                                "IPV6"
+                          5gQosProfile:
+                            5qi: 233
+                            priorityLevel: 110
+                            arp:
+                              priorityLevel: 11
+                              preemptCap : "NOT_PREEMPT"
+                              preemptVuln: "NOT_PREEMPTABLE"
+                -
+                  plmnIdSetIdentifier: "Default"
+                  nssai:
+                    defaultSingleNssais:
+                      -
+                        dnnListId : "Default"
+                        nssai:
+                          sst: 3
+                          sd: "ABCDEF"
+                    singleNssais:
+                      -
+                        dnnListId : "Default"
+                        nssai:
+                          sst: 4
+                  dnnLists:
+                    -
+                      dnnListId: "Default"
+                      dnnDataList:
+                        -
+                          dnn: "Default"
+                          defaultDnnIndicator: true
+                          lboRoamingAllowed: false
+                          iwkEpsInd: false
+                          ladnIndicator: false
+                          sscModes:
+                            defaultSscMode: "SSC_MODE_1"
+                            allowedSscModes:
+                              -
+                                "SSC_MODE_2"
+                          pduSessionTypes:
+                            defaultSessionType: "IPV4"
+                            allowedSessionTypes:
+                              -
+                                "IPV6"
+                          5gQosProfile:
+                            5qi: 233
+                            priorityLevel: 110
+                            arp:
+                              priorityLevel: 11
+                              preemptCap : "NOT_PREEMPT"
+                              preemptVuln: "NOT_PREEMPTABLE"
+        relatedResources:
+          /profiles/udmProfiles/udmSliceProfiles/1111:
+            udmSliceProfileId : "profile1"
+            plmnIdSets:
+              -
+                plmnIdSetIdentifier: "Default"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "\"plmnIdSetIdentifier\" has not the valid format"
+                resource_path: "/profiles/udmProfiles/udmSliceProfiles/1111"
+
+  -
+    description:  Profile update error. plmnIdSetIdentifier not string.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path : "/profiles/udmProfiles/udmSliceProfiles/1111"
+            data:
+              udmSliceProfileId : "profile1"
+              plmnIdSets:
+                -
+                  plmnIdSetIdentifier: 12
+                  nssai:
+                    defaultSingleNssais:
+                      -
+                        dnnListId : "Default"
+                        nssai:
+                          sst: 3
+                          sd: "ABCDEF"
+                    singleNssais:
+                      -
+                        dnnListId : "Default"
+                        nssai:
+                          sst: 4
+                  dnnLists:
+                    -
+                      dnnListId: "Default"
+                      dnnDataList:
+                        -
+                          dnn: "Default"
+                          defaultDnnIndicator: true
+                          lboRoamingAllowed: false
+                          iwkEpsInd: false
+                          ladnIndicator: false
+                          sscModes:
+                            defaultSscMode: "SSC_MODE_1"
+                            allowedSscModes:
+                              -
+                                "SSC_MODE_2"
+                          pduSessionTypes:
+                            defaultSessionType: "IPV4"
+                            allowedSessionTypes:
+                              -
+                                "IPV6"
+                          5gQosProfile:
+                            5qi: 233
+                            priorityLevel: 110
+                            arp:
+                              priorityLevel: 11
+                              preemptCap : "NOT_PREEMPT"
+                              preemptVuln: "NOT_PREEMPTABLE"
+                -
+                  plmnIdSetIdentifier: "Default"
+                  nssai:
+                    defaultSingleNssais:
+                      -
+                        dnnListId : "Default"
+                        nssai:
+                          sst: 3
+                          sd: "ABCDEF"
+                    singleNssais:
+                      -
+                        dnnListId : "Default"
+                        nssai:
+                          sst: 4
+                  dnnLists:
+                    -
+                      dnnListId: "Default"
+                      dnnDataList:
+                        -
+                          dnn: "Default"
+                          defaultDnnIndicator: true
+                          lboRoamingAllowed: false
+                          iwkEpsInd: false
+                          ladnIndicator: false
+                          sscModes:
+                            defaultSscMode: "SSC_MODE_1"
+                            allowedSscModes:
+                              -
+                                "SSC_MODE_2"
+                          pduSessionTypes:
+                            defaultSessionType: "IPV4"
+                            allowedSessionTypes:
+                              -
+                                "IPV6"
+                          5gQosProfile:
+                            5qi: 233
+                            priorityLevel: 110
+                            arp:
+                              priorityLevel: 11
+                              preemptCap : "NOT_PREEMPT"
+                              preemptVuln: "NOT_PREEMPTABLE"
+        relatedResources:
+          /profiles/udmProfiles/udmSliceProfiles/1111:
+            udmSliceProfileId : "profile1"
+            plmnIdSets:
+              -
+                plmnIdSetIdentifier: "Default"
+                nssai:
+                  defaultSingleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 3
+                        sd: "ABCDEF"
+                  singleNssais:
+                    -
+                      dnnListId : "Default"
+                      nssai:
+                        sst: 4
+                dnnLists:
+                  -
+                    dnnListId: "Default"
+                    dnnDataList:
+                      -
+                        dnn: "Default"
+                        defaultDnnIndicator: true
+                        lboRoamingAllowed: false
+                        iwkEpsInd: false
+                        ladnIndicator: false
+                        sscModes:
+                          defaultSscMode: "SSC_MODE_1"
+                          allowedSscModes:
+                            -
+                              "SSC_MODE_2"
+                        pduSessionTypes:
+                          defaultSessionType: "IPV4"
+                          allowedSessionTypes:
+                            -
+                              "IPV6"
+                        5gQosProfile:
+                          5qi: 233
+                          priorityLevel: 110
+                          arp:
+                            priorityLevel: 11
+                            preemptCap : "NOT_PREEMPT"
+                            preemptVuln: "NOT_PREEMPTABLE"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "Field:[plmnIdSetIdentifier] is not string"
+                resource_path: "/profiles/udmProfiles/udmSliceProfiles/1111"

@@ -1,0 +1,332 @@
+description: Provisioning Validator, UdmStaticData creation success case with several changes in same operation
+
+steps:
+  -
+    description:  UdmStaticData creation success with several changes in same operation.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              subscribedUeAmbr:
+                downlink: "1 Gbps"
+                uplink: "2 Mbps"
+              ratRestrictions:
+                -
+                  "NR"
+                -
+                  "WLAN"
+              forbiddenAreas:
+                -
+                  id: "1"
+              serviceAreaRestriction:
+                restrictionType: "ALLOWED_AREAS"
+                areas:
+                  -
+                    id: "1"
+                maxNumOfTAs: 100
+              coreNetworkTypeRestrictions:
+                -
+                  "5GC"
+                -
+                  "EPC"
+              mpsPriority: true
+              mcsPriority: false
+              dlPacketCount: 3
+              micoAllowed: false
+              staticIpAddress:
+                nssaiDnnIpLists:
+                  -
+                    nssai:
+                      sst: 14
+                      sd: "ABCDEF"
+                    dnnIpList:
+                      -
+                        dnn: "5"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.1"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7334"
+                      -
+                        dnn: "7"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.2"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7335"
+                  -
+                    nssai:
+                      sst: 15
+                      sd: "ABCEEE"
+                    dnnIpList:
+                      -
+                        dnn: "6"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.3"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7336"
+                      -
+                        dnn: "8"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.4"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7337"
+              roamingOdb: "OUTSIDE_HOME_PLMN"
+              ueUsageType: 23
+              rfspIndex: 98
+              subsRegTimer: 102
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2209b/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "2"
+              subscribedUeAmbr:
+                downlink: "3 Gbps"
+                uplink: "4 Mbps"
+              ratRestrictions:
+                -
+                  "EUTRA"
+                -
+                  "VIRTUAL"
+              forbiddenAreas:
+                -
+                  id: "2"
+              serviceAreaRestriction:
+                restrictionType: "NOT_ALLOWED_AREAS"
+                areas:
+                  -
+                    id: "3"
+              coreNetworkTypeRestrictions:
+                -
+                  "EPC"
+              mpsPriority: false
+              mcsPriority: true
+              dlPacketCount: 4
+              micoAllowed: true
+              staticIpAddress:
+                nssaiDnnIpLists:
+                  -
+                    nssai:
+                      sst: 24
+                      sd: "BBBCCC"
+                    dnnIpList:
+                      -
+                        dnn: "25"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.20.1"
+                          -
+                            ipv6Addr: "3001:db8:85a3::8a2e:370:7334"
+                      -
+                        dnn: "27"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.20.2"
+                          -
+                            ipv6Addr: "3001:db8:85a3::8a2e:370:7335"
+                  -
+                    nssai:
+                      sst: 35
+                      sd: "ABCAAA"
+                    dnnIpList:
+                      -
+                        dnn: "46"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.20.3"
+                          -
+                            ipv6Addr: "3001:db8:85a3::8a2e:370:7336"
+                      -
+                        dnn: "48"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.20.4"
+                          -
+                            ipv6Addr: "3001:db8:85a3::8a2e:370:7337"
+              roamingOdb: "OUTSIDE_HOME_PLMN_COUNTRY"
+              ueUsageType: 63
+              rfspIndex: 38
+              subsRegTimer: 202
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "IMSI1"
+            notifRef: "notifRef1"
+            imsiMask: "imsiMask1"
+          "/subscribers/2209b/journal/provJournal":
+            imsi: "IMSI2"
+            notifRef: "notifRef2"
+            imsiMask: "imsiMask2"
+          "/subscribers/2209b/udmSubscription/udmStaticAndRegistrationData/udmStaticData":
+            udmSliceProfileId:
+              id: "2"
+          "/profiles/udmProfiles/udmSliceProfiles/1":
+            udmSliceProfileId : "1"
+          "/profiles/udmProfiles/udmSliceProfiles/2":
+            udmSliceProfileId : "2"
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        data:
+          changes:
+            -
+              operation: CREATE
+              resource_path : "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+              data:
+                udmSliceProfileId:
+                  id: "1"
+                subscribedUeAmbr:
+                  downlink: "1 Gbps"
+                  uplink: "2 Mbps"
+                ratRestrictions:
+                  -
+                    "NR"
+                  -
+                    "WLAN"
+                forbiddenAreas:
+                  -
+                    id: "1"
+                serviceAreaRestriction:
+                  restrictionType: "ALLOWED_AREAS"
+                  areas:
+                    -
+                      id: "1"
+                  maxNumOfTAs: 100
+                coreNetworkTypeRestrictions:
+                  -
+                    "5GC"
+                  -
+                    "EPC"
+                mpsPriority: true
+                mcsPriority: false
+                dlPacketCount: 3
+                micoAllowed: false
+                staticIpAddress:
+                  nssaiDnnIpLists:
+                    -
+                      nssai:
+                        sst: 14
+                        sd: "ABCDEF"
+                      dnnIpList:
+                        -
+                          dnn: "5"
+                          ipAddress:
+                            -
+                              ipv4Addr: "192.168.10.1"
+                            -
+                              ipv6Addr: "2001:db8:85a3::8a2e:370:7334"
+                        -
+                          dnn: "7"
+                          ipAddress:
+                            -
+                              ipv4Addr: "192.168.10.2"
+                            -
+                              ipv6Addr: "2001:db8:85a3::8a2e:370:7335"
+                    -
+                      nssai:
+                        sst: 15
+                        sd: "ABCEEE"
+                      dnnIpList:
+                        -
+                          dnn: "6"
+                          ipAddress:
+                            -
+                              ipv4Addr: "192.168.10.3"
+                            -
+                              ipv6Addr: "2001:db8:85a3::8a2e:370:7336"
+                        -
+                          dnn: "8"
+                          ipAddress:
+                            -
+                              ipv4Addr: "192.168.10.4"
+                            -
+                              ipv6Addr: "2001:db8:85a3::8a2e:370:7337"
+                roamingOdb: "OUTSIDE_HOME_PLMN"
+                ueUsageType: 23
+                rfspIndex: 98
+                subsRegTimer: 102
+            -
+              operation: "UPDATE"
+              resource_path: "/subscribers/2209b/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+              data:
+                udmSliceProfileId:
+                  id: "2"
+                subscribedUeAmbr:
+                  downlink: "3 Gbps"
+                  uplink: "4 Mbps"
+                ratRestrictions:
+                  -
+                    "EUTRA"
+                  -
+                    "VIRTUAL"
+                forbiddenAreas:
+                  -
+                    id: "2"
+                serviceAreaRestriction:
+                  restrictionType: "NOT_ALLOWED_AREAS"
+                  areas:
+                    -
+                      id: "3"
+                coreNetworkTypeRestrictions:
+                  -
+                    "EPC"
+                mpsPriority: false
+                mcsPriority: true
+                dlPacketCount: 4
+                micoAllowed: true
+                staticIpAddress:
+                  nssaiDnnIpLists:
+                    -
+                      nssai:
+                        sst: 24
+                        sd: "BBBCCC"
+                      dnnIpList:
+                        -
+                          dnn: "25"
+                          ipAddress:
+                            -
+                              ipv4Addr: "192.168.20.1"
+                            -
+                              ipv6Addr: "3001:db8:85a3::8a2e:370:7334"
+                        -
+                          dnn: "27"
+                          ipAddress:
+                            -
+                              ipv4Addr: "192.168.20.2"
+                            -
+                              ipv6Addr: "3001:db8:85a3::8a2e:370:7335"
+                    -
+                      nssai:
+                        sst: 35
+                        sd: "ABCAAA"
+                      dnnIpList:
+                        -
+                          dnn: "46"
+                          ipAddress:
+                            -
+                              ipv4Addr: "192.168.20.3"
+                            -
+                              ipv6Addr: "3001:db8:85a3::8a2e:370:7336"
+                        -
+                          dnn: "48"
+                          ipAddress:
+                            -
+                              ipv4Addr: "192.168.20.4"
+                            -
+                              ipv6Addr: "3001:db8:85a3::8a2e:370:7337"
+                roamingOdb: "OUTSIDE_HOME_PLMN_COUNTRY"
+                ueUsageType: 63
+                rfspIndex: 38
+                subsRegTimer: 202
+        content_type: application/json

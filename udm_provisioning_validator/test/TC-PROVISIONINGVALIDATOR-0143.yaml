@@ -1,0 +1,70 @@
+description: Provisioning Validator, ServiceAreaRestriction Creation Error case, 422 error(no relatedResources)
+
+steps:
+  -
+    description:  ServiceAreaRestriction Creation Error, no related resources
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              serviceAreaRestriction:
+                restrictionType: "ALLOWED_AREAS"
+                areas:
+                  -
+                    id: "1"
+        relatedResources:
+          "/subscribers/2209a/journal/provJournal":
+            imsi: "IMSI1"
+            notifRef: "notifRef1"
+            imsiMask: "imsiMask1"
+      content_type: application/json
+      expected_response:
+        code: 422
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Unprocessable entity
+              errorDetails:
+                description: "provJournal for subscriber mscId=2208a not included. Needed to check if IMSI is defined: /subscribers/2208a/journal/provJournal"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+  -
+    description:  ServiceAreaRestriction Creation Error, areas is empty
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+        relatedResources:
+          "/subscribers/2209a/journal/provJournal":
+            imsi: "IMSI1"
+            notifRef: "notifRef1"
+            imsiMask: "imsiMask1"
+      content_type: application/json
+      expected_response:
+        code: 422
+        schema: udm/ProblemDetails
+        data:
+          errors:
+            -
+              errorMessage: Unprocessable entity
+              errorDetails:
+                description: "provJournal for subscriber mscId=2208a not included. Needed to check if IMSI is defined: /subscribers/2208a/journal/provJournal"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+        content_type: application/json

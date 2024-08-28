@@ -1,0 +1,229 @@
+description: Provisioning Validator, negative tests with changes with invalid data.
+
+steps:
+  -
+    description:  Verify undefined operation 'qwerty' is not applicable.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "qwerty"
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: true
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: false
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "21405612345678"
+      content_type: application/json
+      expected_response:
+        code: 400
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errorMessage: Malformed request
+          errorDetails:
+            description: 'operation value is not allowed. It should be either: CREATE, UPDATE or DELETE'
+
+
+  -
+    description: Verify that a boolean instead of a defined operation results in failure.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: True
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: true
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: false
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "21405612345678"
+      content_type: application/json
+      expected_response:
+        code: 400
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errorMessage: Malformed request
+          errorDetails:
+            description: operation is not string
+  -
+    description: Verify that a number instead of a defined operation results in failure.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: 666
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: true
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: false
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "21405612345678"
+      content_type: application/json
+      expected_response:
+        code: 400
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errorMessage: Malformed request
+          errorDetails:
+            description: operation is not string
+
+  -
+    description: Verify that an abitrary resource path string results in failure.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path: "qwerty"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: true
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: false
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "21405612345678"
+      content_type: application/json
+      expected_response:
+        code: 422
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Unprocessable entity
+              errorDetails:
+                description:  Validation could not be performed on the specified resource_path
+                resource_path: "qwerty"
+  -
+    description: Verify that a number as resource path results in failure.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path: 666
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: true
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: false
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "21405612345678"
+      content_type: application/json
+      expected_response:
+        code: 400
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errorMessage: Malformed request
+          errorDetails:
+            description: resource_path is not string
+
+  -
+    description: Verify that a boolean as resource path results in failure.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path: True
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: true
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: false
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "21405612345678"
+      content_type: application/json
+      expected_response:
+        code: 400
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errorMessage: Malformed request
+          errorDetails:
+            description:  resource_path is not string
+  -
+    description: Verify that DELETE change always returns 200 with nonexistant resource path.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "DELETE"
+            resource_path: "qwerty"
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        data:
+          changes:
+            -
+              operation: "DELETE"
+              resource_path: "qwerty"
+        content_type: application/json

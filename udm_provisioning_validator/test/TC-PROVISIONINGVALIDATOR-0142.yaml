@@ -1,0 +1,25 @@
+description: Provisioning Validator, SliceProfileId Creation Error case
+
+steps:
+  -
+    description:  SliceProfileId must be present in request
+    values:
+      id: "1"
+      operation: "CREATE"
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data: udm/no_slice_profile_id
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: Mandatory field:[udmSliceProfileId] not found
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"

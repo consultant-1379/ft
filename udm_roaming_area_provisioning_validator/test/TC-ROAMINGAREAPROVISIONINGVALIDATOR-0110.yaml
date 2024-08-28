@@ -1,0 +1,256 @@
+description: Provisioning Validator, Malformed Body errors Cases
+
+steps:
+  -
+    description:  Roaming Area with AreaCode Invalid value.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data: udm/roaming_area_area_code_error
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: Field:[areaCodes] is not string
+                resource_path: "/profiles/udmProfiles/udmRoamingAreas/1234"
+  -
+    description:  Roaming Area with tacs Invalid value.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data: udm/roaming_area_tacs_error
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "\"tacs\" in \"areaList\" has an invalid format"
+                resource_path: "/profiles/udmProfiles/udmRoamingAreas/1234"
+  -
+    description:  Roaming Area without areaCodes and tacs Fields.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/profiles/udmProfiles/udmRoamingAreas/1234"
+            data:
+              areaList:
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: Field:[areaList] is not an array
+                resource_path: "/profiles/udmProfiles/udmRoamingAreas/1234"
+  -
+    description:  Roaming Area without areaList.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/profiles/udmProfiles/udmRoamingAreas/1234"
+
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: At least one "areaList" must exist
+                resource_path: "/profiles/udmProfiles/udmRoamingAreas/1234"
+  -
+    description:  Roaming Area with tacs empty.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/profiles/udmProfiles/udmRoamingAreas/1234"
+            data:
+              areaList:
+                -
+                  tacs:
+
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: Field:[tacs] is not an array
+                resource_path: "/profiles/udmProfiles/udmRoamingAreas/1234"
+  -
+    description:  Roaming Area with tacs empty with an array.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/profiles/udmProfiles/udmRoamingAreas/1234"
+            data:
+              areaList:
+                -
+                  tacs:
+                    -
+
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: Field:[tacs] is not string
+                resource_path: "/profiles/udmProfiles/udmRoamingAreas/1234"
+  -
+    description:  Roaming Area with tacs not an array.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/profiles/udmProfiles/udmRoamingAreas/1234"
+            data:
+              areaList:
+                -
+                  tacs: "ABCD"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: Field:[tacs] is not an array
+                resource_path: "/profiles/udmProfiles/udmRoamingAreas/1234"
+  -
+    description:  Roaming Area, areaList not an array.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/profiles/udmProfiles/udmRoamingAreas/1234"
+            data:
+              areaList:
+                tacs: "ABCD"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: Field:[areaList] is not an array
+                resource_path: "/profiles/udmProfiles/udmRoamingAreas/1234"
+  -
+    description:  Roaming Area, udmRoamingAreaId not string.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/profiles/udmProfiles/udmRoamingAreas/1234"
+            data:
+              udmRoamingAreaId: 1234
+              areaList:
+                -
+                  areaCodes: "2332233"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: Field:[udmRoamingAreaId] is not string
+                resource_path: "/profiles/udmProfiles/udmRoamingAreas/1234"
+  -
+    description:  Roaming Area, udmRoamingAreaId empty.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/profiles/udmProfiles/udmRoamingAreas/1234"
+            data:
+              udmRoamingAreaId:
+              areaList:
+                -
+                  areaCodes: "2332233"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: Field:[udmRoamingAreaId] is not string
+                resource_path: "/profiles/udmProfiles/udmRoamingAreas/1234"

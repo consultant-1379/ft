@@ -1,0 +1,475 @@
+description: AuthSubscription object, Creation with akaAlgorithmInd
+steps:
+  -
+    description:  AuthSubscription creation success, authenticationMethod is 5G_AKA, akaAlgorithmInd equal to legacy AKAALGIND.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              a4KeyV: "12"
+              akaAlgorithmInd: "1"
+              vendorSpecific-0001:
+                vendorSpecific1:
+                  -
+                    vendor1
+                  -
+                    vendor2
+                  -
+                    vendor3
+        relatedResources:
+          "/legacy/serv=Auth/IMSI=123456789012345":
+            SQNPS: "4"
+            VNUMBER: 0
+            AKAALGIND: 1
+            AKATYPE: 1
+            A4IND: 2
+            IMSI: "123456789012345"
+            GAP: "::AgAFDhAQ"
+            SQNCS: "4"
+            objectClass: "AU1"
+            SQNIMS: "13"
+            EKI: "2200AA34D40C090D6D4C3B7763854AFB"
+            BNS: "1"
+            SQNEPS: "11"
+            A3A8IND: "15"
+            AMFVALUE: 47545
+            GAPSIGN: "1"
+            FSETIND: 11
+            CDC: "122"
+            KIND: 1
+            SQN: "0"
+            EOPC: "7AF98A06EA86AB8B3377D27AE089A3B4"
+          "/subscribers/123abc/journal/provJournal":
+            imsiMask: "0b0000000000010000"
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        data:
+          changes:
+            -
+              operation: "CREATE"
+              resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+              data:                
+                authenticationMethod : "5G_AKA"
+                encPermanentKey : "2200AA34D40C090D6D4C3B7763854AFB"
+                authenticationManagementField: "B9B9"
+                algorithmId: "11"
+                a4KeyInd: "1"
+                a4Ind: "2"
+                a4KeyV: "12"
+                akaAlgorithmInd: "1"
+                encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3B4"
+                vendorSpecific-0001:
+                  vendorSpecific1:
+                    -
+                      vendor1
+                    -
+                      vendor2
+                    -
+                      vendor3
+            -
+              operation: "CREATE"
+              resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionDynamicData"
+              data:
+                sqnScheme: "TIME_BASED"                
+                lastIndexes: {}
+        content_type: application/json
+  -
+    description:  AuthSubscription creation success, authenticationMethod is 5G_AKA, akaAlgorithmInd not included but legacy AKAALGIND.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              a4KeyV: "12"              
+              vendorSpecific-0001:
+                vendorSpecific1:
+                  -
+                    vendor1
+                  -
+                    vendor2
+                  -
+                    vendor3
+        relatedResources:
+          "/legacy/serv=Auth/IMSI=123456789012345":
+            SQNPS: "4"
+            VNUMBER: 0
+            AKAALGIND: 1
+            AKATYPE: 1
+            A4IND: 2
+            IMSI: "123456789012345"
+            GAP: "::AgAFDhAQ"
+            SQNCS: "4"
+            objectClass: "AU1"
+            SQNIMS: "13"
+            EKI: "2200AA34D40C090D6D4C3B7763854AFB"
+            BNS: "1"
+            SQNEPS: "11"
+            A3A8IND: "15"
+            AMFVALUE: 47545
+            GAPSIGN: "1"
+            FSETIND: 11
+            CDC: "122"
+            KIND: 1
+            SQN: "0"
+            EOPC: "7AF98A06EA86AB8B3377D27AE089A3B4"
+          "/subscribers/123abc/journal/provJournal":
+            imsiMask: "0b0000000000010000"
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        data:
+          changes:
+            -
+              operation: "CREATE"
+              resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+              data:                
+                authenticationMethod : "5G_AKA"
+                encPermanentKey : "2200AA34D40C090D6D4C3B7763854AFB"
+                authenticationManagementField: "B9B9"
+                algorithmId: "11"
+                a4KeyInd: "1"
+                a4Ind: "2"
+                a4KeyV: "12"
+                akaAlgorithmInd: "1"
+                encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3B4"
+                vendorSpecific-0001:
+                  vendorSpecific1:
+                    -
+                      vendor1
+                    -
+                      vendor2
+                    -
+                      vendor3
+            -
+              operation: "CREATE"
+              resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionDynamicData"
+              data:
+                sqnScheme: "TIME_BASED"                
+                lastIndexes: {}
+        content_type: application/json
+  -
+    description:  AuthSubscription creation Error, authenticationMethod is 5G_AKA, akaAlgorithmInd equal to legacy but bit is not AUC in imsiMask.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              a4KeyV: "12"
+              akaAlgorithmInd: "1"
+              vendorSpecific-0001:
+                vendorSpecific1:
+                  -
+                    vendor1
+                  -
+                    vendor2
+                  -
+                    vendor3
+        relatedResources:
+          "/legacy/serv=Auth/IMSI=123456789012345":
+            SQNPS: "4"
+            VNUMBER: 0
+            AKAALGIND: 1
+            AKATYPE: 1
+            A4IND: 2
+            IMSI: "123456789012345"
+            GAP: "::AgAFDhAQ"
+            SQNCS: "4"
+            objectClass: "AU1"
+            SQNIMS: "13"
+            EKI: "2200AA34D40C090D6D4C3B7763854AFB"
+            BNS: "1"
+            SQNEPS: "11"
+            A3A8IND: "15"
+            AMFVALUE: 47545
+            GAPSIGN: "1"
+            FSETIND: 11
+            CDC: "122"
+            KIND: 1
+            SQN: "0"
+            EOPC: "7AF98A06EA86AB8B3377D27AE089A3B4"
+          "/subscribers/123abc/journal/provJournal":
+            imsiMask: "0b0000000000101000"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "It is not allowed to create or update a subscriber with \"akaAlgorithmInd\" in \"authSubscriptionStaticData\" if not defined in AuC"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+        content_type: application/json
+  -
+    description:  AuthSubscription creation Error, authenticationMethod is 5G_AKA, akaAlgorithmInd not equal to legacy AKAALGIND.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              a4KeyV: "12"
+              akaAlgorithmInd: "1"
+              vendorSpecific-0001:
+                vendorSpecific1:
+                  -
+                    vendor1
+                  -
+                    vendor2
+                  -
+                    vendor3
+        relatedResources:
+          "/legacy/serv=Auth/IMSI=123456789012345":
+            SQNPS: "4"
+            VNUMBER: 0
+            AKAALGIND: 2
+            AKATYPE: 1
+            A4IND: 2
+            IMSI: "123456789012345"
+            GAP: "::AgAFDhAQ"
+            SQNCS: "4"
+            objectClass: "AU1"
+            SQNIMS: "13"
+            EKI: "2200AA34D40C090D6D4C3B7763854AFB"
+            BNS: "1"
+            SQNEPS: "11"
+            A3A8IND: "15"
+            AMFVALUE: 47545
+            GAPSIGN: "1"
+            FSETIND: 11
+            CDC: "122"
+            KIND: 1
+            SQN: "0"
+            EOPC: "7AF98A06EA86AB8B3377D27AE089A3B4"
+          "/subscribers/123abc/journal/provJournal":
+            imsiMask: "0b0000000000010000"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"akaAlgorithmInd\" is not equal to \"AKAALGIND\" attribute of 4G legacy subscription"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"                
+        content_type: application/json
+  -
+    description:  AuthSubscription creation Error, authenticationMethod is 5G_AKA, akaAlgorithmInd equal to legacy AKAALGIND but no ProvJournal present.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              a4KeyV: "12"
+              akaAlgorithmInd: "1"
+              vendorSpecific-0001:
+                vendorSpecific1:
+                  -
+                    vendor1
+                  -
+                    vendor2
+                  -
+                    vendor3
+        relatedResources:
+          "/legacy/serv=Auth/IMSI=123456789012345":
+            SQNPS: "4"
+            VNUMBER: 0
+            AKAALGIND: 1
+            AKATYPE: 1
+            A4IND: 2
+            IMSI: "123456789012345"
+            GAP: "::AgAFDhAQ"
+            SQNCS: "4"
+            objectClass: "AU1"
+            SQNIMS: "13"
+            EKI: "2200AA34D40C090D6D4C3B7763854AFB"
+            BNS: "1"
+            SQNEPS: "11"
+            A3A8IND: "15"
+            AMFVALUE: 47545
+            GAPSIGN: "1"
+            FSETIND: 11
+            CDC: "122"
+            KIND: 1
+            SQN: "0"
+            EOPC: "7AF98A06EA86AB8B3377D27AE089A3B4"          
+      content_type: application/json
+      expected_response:
+        code: 422
+        schema: udm/ProblemDetails
+        data:
+          errors:
+            -
+              errorMessage: "Unprocessable entity"
+              errorDetails:
+                description: "provJournal for subscriber mscId=123abc not included. Needed to check if user is defined in AuC when attribute \"akaAlgorithmInd\" is present"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"                
+        content_type: application/json
+  -
+    description:  AuthSubscription UPDATE success, authenticationMethod is 5G_AKA, akaAlgorithmInd is modifiable
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"              
+              akaAlgorithmInd: "0"              
+        relatedResources:
+          "/subscribers/123abc/authSubscription":
+            "imsi-123456789012345":
+              authSubscriptionStaticData:
+                authenticationMethod: "5G_AKA"
+                encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+                authenticationManagementField: "A8A8"
+                algorithmId: "11"
+                a4KeyInd: "1"
+                a4Ind: "2"
+              authSubscriptionDynamicData:
+                sqnScheme: "GENERAL"
+                sqn: "111111111111"
+          "/subscribers/123abc/journal/provJournal":
+            imsiMask: "0b0000000000010000"
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        data:
+          changes:
+            -
+              operation: "UPDATE"
+              resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+              data:                
+                authenticationMethod : "5G_AKA"
+                encPermanentKey : "2200AA34D40C090D6D4C3B7763854AFB"
+                authenticationManagementField: "B9B9"
+                algorithmId: "11"
+                a4KeyInd: "1"
+                a4Ind: "2"                
+                akaAlgorithmInd: "0"                   
+        content_type: application/json
+  -
+    description:  AuthSubscription Update Error, authenticationMethod is 5G_AKA, akaAlgorithmInd is included but not in AuC.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              a4KeyV: "12"
+              akaAlgorithmInd: "1"
+              vendorSpecific-0001:
+                vendorSpecific1:
+                  -
+                    vendor1
+                  -
+                    vendor2
+                  -
+                    vendor3
+        relatedResources:
+          "/subscribers/123abc/authSubscription":
+            "imsi-123456789012345":
+              authSubscriptionStaticData:
+                authenticationMethod: "5G_AKA"
+                encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+                authenticationManagementField: "A8A8"
+                algorithmId: "11"
+                a4KeyInd: "1"
+                a4Ind: "2"
+              authSubscriptionDynamicData:
+                sqnScheme: "GENERAL"
+                sqn: "111111111111"
+          "/subscribers/123abc/journal/provJournal":
+            imsiMask: "0b0000000000101000"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "It is not allowed to create or update a subscriber with \"akaAlgorithmInd\" in \"authSubscriptionStaticData\" if not defined in AuC"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"                
+        content_type: application/json

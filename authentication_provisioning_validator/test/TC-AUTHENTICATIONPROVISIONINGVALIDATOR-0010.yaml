@@ -1,0 +1,203 @@
+description: AuthSubscription object, Check mandatory attributes on creation
+
+steps:
+  -
+    description:  AuthSubscription creation error, authenticationMethod not provided.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              key: "hello"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "Mandatory field:[authenticationMethod] not found as child of:[authSubscriptionStaticData]"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, authenticationMethod is 5G_AKA, conditional fields not present.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod: "5G_AKA"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"encPermanentKey\" in \"authSubscriptionStaticData\" has not been defined with an AKA authentication method"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"authenticationManagementField\" in \"authSubscriptionStaticData\" has not been defined with an AKA authentication method"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"algorithmId\" in \"authSubscriptionStaticData\" has not been defined with an AKA authentication method"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"a4KeyInd\" in \"authSubscriptionStaticData\" has not been defined with an AKA authentication method"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"a4Ind\" in \"authSubscriptionStaticData\" has not been defined with an AKA authentication method"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation success, authenticationMethod is 5G_AKA, conditional fields are present.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        data:
+          changes:
+            -
+              operation: "CREATE"
+              resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+              data:                
+                authenticationMethod : "5G_AKA"
+                encPermanentKey : "2200AA34D40C090D6D4C3B7763854AFB"
+                authenticationManagementField: "B9B9"
+                algorithmId: "11"
+                a4KeyInd: "1"
+                a4Ind: "2"
+            -
+              operation: "CREATE"
+              resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionDynamicData"
+              data:
+                sqnScheme: "NON_TIME_BASED"
+                sqn: "000000000000"
+                lastIndexes: {}
+        content_type: application/json
+  -
+    description:  AuthSubscription creation error, authenticationMethod is EAP_AKA_PRIME, conditional fields not present.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod: "EAP_AKA_PRIME"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"encPermanentKey\" in \"authSubscriptionStaticData\" has not been defined with an AKA authentication method"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"authenticationManagementField\" in \"authSubscriptionStaticData\" has not been defined with an AKA authentication method"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"algorithmId\" in \"authSubscriptionStaticData\" has not been defined with an AKA authentication method"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"a4KeyInd\" in \"authSubscriptionStaticData\" has not been defined with an AKA authentication method"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"a4Ind\" in \"authSubscriptionStaticData\" has not been defined with an AKA authentication method"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation success, authenticationMethod is EAP_AKA_PRIME, conditional fields are present.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "EAP_AKA_PRIME"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        data:
+          changes:
+            -
+              operation: "CREATE"
+              resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+              data:
+                authenticationMethod : "EAP_AKA_PRIME"
+                encPermanentKey : "2200AA34D40C090D6D4C3B7763854AFB"
+                authenticationManagementField: "B9B9"
+                algorithmId: "11"
+                a4KeyInd: "1"
+                a4Ind: "2"
+            -
+              operation: "CREATE"
+              resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionDynamicData"
+              data:
+                sqnScheme: "NON_TIME_BASED"
+                sqn: "000000000000"
+                lastIndexes: {}
+        content_type: application/json

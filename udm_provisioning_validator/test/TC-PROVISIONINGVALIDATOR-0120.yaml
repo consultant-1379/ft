@@ -1,0 +1,25 @@
+description: There is no an IMSI included in the definition for the subscriber 
+
+steps:
+  -
+    description:  IMSI is not included in the definition for the subscriber.
+    values:
+      id: "1"
+      operation: "CREATE"
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data: udm/no_imsi_definition
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: There must be an IMSI defined for the subscriber mscId=2208a
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"

@@ -1,0 +1,7 @@
+eric-udm-udmprovisioningvalidator:
+  - udm_provisioning_validator
+  - udm_profile_provisioning_validator
+  - udm_roaming_area_provisioning_validator
+  - sms_provisioning_validator
+eric-udm-authprovvalidator:
+  - authentication_provisioning_validator

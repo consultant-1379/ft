@@ -1,0 +1,317 @@
+description: Verify all attributes are according to format and supported value ranges for UPDATE operation
+
+steps:
+  -
+    description:  smsSusbcribed is not boolean
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: "hello"
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: true
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: false
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData":
+            smsSubscriptionData:
+              smsSubscribed: true
+            smsManagementSubscriptionData:
+              mtSmsSubscribed: true
+              mtSmsBarringAll: false
+              mtSmsBarringRoaming: false
+              moSmsSubscribed: false
+              moSmsBarringAll: false
+              moSmsBarringRoaming: false
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "Field:[smsSubscribed] is not boolean"
+                resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+
+  -
+    description:  mtSmsSusbcribed is not boolean
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: "hello"
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: false
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData":
+            smsSubscriptionData:
+              smsSubscribed: true
+            smsManagementSubscriptionData:
+              mtSmsSubscribed: true
+              mtSmsBarringAll: false
+              mtSmsBarringRoaming: false
+              moSmsSubscribed: false
+              moSmsBarringAll: false
+              moSmsBarringRoaming: false
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "Field:[mtSmsSubscribed] is not boolean"
+                resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+
+  -
+    description:  mtSmsBarringAll is not boolean
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: true
+                mtSmsBarringAll: "hello"
+                mtSmsBarringRoaming: false
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData":
+            smsSubscriptionData:
+              smsSubscribed: true
+            smsManagementSubscriptionData:
+              mtSmsSubscribed: true
+              mtSmsBarringAll: false
+              mtSmsBarringRoaming: false
+              moSmsSubscribed: false
+              moSmsBarringAll: false
+              moSmsBarringRoaming: false
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "Field:[mtSmsBarringAll] is not boolean"
+                resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+
+  -
+    description:  mtSmsBarringRoaming is not boolean
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: true
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: "hello"
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData":
+            smsSubscriptionData:
+              smsSubscribed: true
+            smsManagementSubscriptionData:
+              mtSmsSubscribed: true
+              mtSmsBarringAll: false
+              mtSmsBarringRoaming: false
+              moSmsSubscribed: false
+              moSmsBarringAll: false
+              moSmsBarringRoaming: false
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "Field:[mtSmsBarringRoaming] is not boolean"
+                resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+
+  -
+    description:  moSmsSusbcribed is not boolean
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: true
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: false
+                moSmsSubscribed: "hello"
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData":
+            smsSubscriptionData:
+              smsSubscribed: true
+            smsManagementSubscriptionData:
+              mtSmsSubscribed: true
+              mtSmsBarringAll: false
+              mtSmsBarringRoaming: false
+              moSmsSubscribed: false
+              moSmsBarringAll: false
+              moSmsBarringRoaming: false
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "Field:[moSmsSubscribed] is not boolean"
+                resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+
+  -
+    description:  moSmsBarringAll is not boolean
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: true
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: false
+                moSmsSubscribed: false
+                moSmsBarringAll: "hello"
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData":
+            smsSubscriptionData:
+              smsSubscribed: true
+            smsManagementSubscriptionData:
+              mtSmsSubscribed: true
+              mtSmsBarringAll: false
+              mtSmsBarringRoaming: false
+              moSmsSubscribed: false
+              moSmsBarringAll: false
+              moSmsBarringRoaming: false
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "Field:[moSmsBarringAll] is not boolean"
+                resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+
+  -
+    description:  moSmsBarringRoaming is not boolean
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: true
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: false
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: "hello"
+        relatedResources:
+          "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData":
+            smsSubscriptionData:
+              smsSubscribed: true
+            smsManagementSubscriptionData:
+              mtSmsSubscribed: true
+              mtSmsBarringAll: false
+              mtSmsBarringRoaming: false
+              moSmsSubscribed: false
+              moSmsBarringAll: false
+              moSmsBarringRoaming: false
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "Field:[moSmsBarringRoaming] is not boolean"
+                resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"

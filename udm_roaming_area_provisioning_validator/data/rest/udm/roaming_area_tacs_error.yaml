@@ -1,0 +1,12 @@
+changes:
+  -
+    operation: "CREATE"
+    resource_path: "/profiles/udmProfiles/udmRoamingAreas/1234"
+    data:
+      udmRoamingAreaId: "1234"
+      areaList:
+        -
+          tacs:
+            -
+              "HHHHHH"
+          

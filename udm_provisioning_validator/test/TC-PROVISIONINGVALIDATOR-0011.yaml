@@ -1,0 +1,29 @@
+description: Provisioning Validator, ForbiddenAreas Creation success case, no relatedResources
+
+steps:
+  -
+    description:  ForbiddenAreas Creation success.
+    values:
+      id: "1"
+      operation: "CREATE"
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data: udm/forbidden_areas_success
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        data:
+          changes:
+            -
+              operation: "CREATE"
+              resource_path : "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+              data:
+                udmSliceProfileId:
+                  id: "1"      
+                forbiddenAreas:
+                  -
+                    id: "1"
+        content_type: application/json

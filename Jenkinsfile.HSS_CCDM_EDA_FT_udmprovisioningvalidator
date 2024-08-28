@@ -1,0 +1,119 @@
+@Library('PipelineGlobalLibrary') _
+import com.ericsson.*
+
+
+def chart_name       = params.CHART_NAME?:'eric-udm-udmprovisioningvalidator'
+def chart_version    = params.CHART_VERSION?:''
+def build_number     = BUILD_NUMBER
+
+def repo_sut_name    = "arm-udm-hss-helm"
+def repo_sut_url     = params.CHART_REPO?:common.getArmHelmRepo('hss', 'dev')[1]
+def repo_inj_name    = common.getArmHelmRepo('inj')[0]
+def repo_inj_url     = common.getArmHelmRepo('inj')[1]
+def repo_adp_name    = "arm-udm-adp-helm"
+def repo_adp_url     = common.getArmHelmRepo('hss', 'release')[1]
+
+String cfg_unit        = "hss"
+String credentials_name = "userpwd-${cfg_unit}"
+String arm_credentials_name = "armpass-${cfg_unit}"
+
+String username        = common.getUserPassFromCredential(credentials_name, "username")
+String passwd          = common.getUserPassFromCredential(credentials_name, "password")
+def armToken           = common.getTokenFromCredential(arm_credentials_name)
+
+def job              = JOB_NAME.toLowerCase().replace('_', '-')
+def mycloud          = common.getPodDefaultValues('ci.hss.cluster.ft.cloud')
+def mynamespace      = "${job}-${build_number}-ns"
+def logshippername   = "eric-log-shipper-${mynamespace}"
+def gerrit_branch_ft = params.GERRIT_BRANCH?:'master'
+def gerrit_branch_ftfw = params.GERRIT_BRANCH_FTFW?:'master'
+def testrunnername   = "testrunner-${job}"
+def testrunnerstatus = "helm status ${testrunnername} | sed --quiet '/Pod(related)/,\$p' | grep testrunner- | head -1 | cut -d \" \" -f1"
+
+def sut1name         = "${chart_name}-${build_number}"
+def adpname          = "adp-${job}-${build_number}"
+def adp_gs           = 'eric-adp-5g-udm'
+
+def istio_host       = "eric-udm-traffic.istio-system"
+def istio_port       = "82"
+
+def suttag           = ""
+if (chart_version != '') {
+ suttag            = "--version=${chart_version}"
+}
+
+def breakpoint       = params['BREAKPOINT']?:'false'
+
+def erikubecli_name  = 'erikubecli'
+def erikubecli_img   = common.getPodDefaultValues("ci.udm.cluster.ft.erikube-client")
+
+lock("hss_5g_port${istio_port}_${mycloud}") {
+  testSuite {
+    name        = job
+    parallel    = false
+    priority    = 3
+    namespace   = mynamespace
+    createns    = true
+    cloud       = mycloud
+    environment = []
+    volumes     = []
+    containers  = [
+    containerTemplate(
+      name: erikubecli_name,
+      image: erikubecli_img,
+      ttyEnabled: true
+      ),
+    containerTemplate(
+      name: 'busybox',
+      image: 'armdocker.rnd.ericsson.se/dockerhub-ericsson-remote/busybox:latest',
+      ttyEnabled: true
+      )
+    ]
+
+    testCases = [
+      // Boolean flags: setUp, tearDown, sequential, abortOnError
+      // Enable helm client, add helm repos and update helm repo indexation
+      ['helm init stuff', 'erikubecli', "helm init --client-only --stable-repo-url=https://arm.lmera.ericsson.se/artifactory/kubernetes-google/ --skip-refresh; \
+      helm version; \
+      echo \"add helm repos for sut, adp and inj with --username and --password (suppress command output)\"; \
+      set +x; \
+      helm --username ${username} --password ${passwd} repo add ${repo_sut_name} ${repo_sut_url}; \
+      helm --username ${username} --password ${passwd} repo add ${repo_adp_name} ${repo_adp_url}; \
+      helm --username ${username} --password ${passwd} repo add ${repo_inj_name} ${repo_inj_url}; \
+      set -x; \
+      helm repo update", true, false, true, true] as ShellTestCase,
+
+      // Cleaning old deployments
+      ['Cleaning old deployments', 'erikubecli', "[ `helm list ${adpname} | wc -l` -ge 1 ] && helm delete --purge ${adpname} || echo Nothing to delete; [ `helm list ${sut1name} | wc -l` -ge 1 ] && helm delete --purge ${sut1name} || echo Nothing to delete; [ `helm list ${testrunnername} | wc -l` -ge 1 ] && helm delete --purge ${testrunnername} || echo Nothing to delete", true, false, true, true] as ShellTestCase,
+
+      // Install and INJ
+      ['Install INJ', 'erikubecli', "helm upgrade --install --namespace ${mynamespace} ${testrunnername} --set repositories='{HSS/CCDM/EDA/ft:${gerrit_branch_ft},HSS/CCSM/ftfw:${gerrit_branch_ftfw}}' --wait ${repo_inj_name}/testrunner; echo -n \"Installed version: \"; helm list ${testrunnername} | grep ${testrunnername} | cut -f 5", true, false, true, true] as ShellTestCase,
+
+       // Install NF SUT
+       ["Install SUT ${chart_name}", 'erikubecli', "helm repo update; helm install ${suttag} --namespace ${mynamespace} --name ${sut1name} --devel \
+      --wait --timeout 900 ${repo_sut_name}/${chart_name}; echo -n \"Installed version: \"; helm list ${sut1name} | grep ${sut1name} | cut -f 5",true, false, true, true] as ShellTestCase,
+
+      // Debug stage if neededed
+      ['breakpoint', 'jnlp', { if (breakpoint == 'sut') input 'Waiting for user input to continue'}, false, true, true, false] as TestCase,
+
+      // Test Suite execution
+      ['Exec udm_provisioning_validator TS', 'erikubecli', "kubectl exec -it --namespace ${mynamespace} `${testrunnerstatus}` -- ft udm_provisioning_validator "] as ShellTestCase,
+      ['Exec udm_profile_provisioning_validator TS', 'erikubecli', "kubectl exec -it --namespace ${mynamespace} `${testrunnerstatus}` -- ft udm_profile_provisioning_validator "] as ShellTestCase,
+      ['Exec udm_roaming_area_provisioning_validator TS', 'erikubecli', "kubectl exec -it --namespace ${mynamespace} `${testrunnerstatus}` -- ft udm_roaming_area_provisioning_validator "] as ShellTestCase,
+      ['Exec sms_provisioning_validator TS', 'erikubecli', "kubectl exec -it --namespace ${mynamespace} `${testrunnerstatus}` -- ft sms_provisioning_validator "] as ShellTestCase,
+
+      // Collect and copy junit.xml files to workspace
+      ['Copy junit.xml to workspace', 'erikubecli', "kubectl cp ${mynamespace}/`${testrunnerstatus}`:/var/log .", true, false, true, true] as ShellTestCase,
+      ['Cleanup FT junit.xml files', 'erikubecli', "kubectl exec -it --namespace ${mynamespace} `${testrunnerstatus}` -- /bin/bash -c 'rm -rf /var/log/*'", true, false, true, true] as ShellTestCase,
+
+      // Debug stage if neededed
+      ['breakpoint', 'jnlp', { if (breakpoint == 'true') input 'Waiting for user input to continue'}, false, true, true, false] as TestCase,
+
+      // Delete NF SUT and INJ
+      ['Delete INJ ${testrunnername}', 'erikubecli', "helm delete --purge ${testrunnername}", false, true, true, false] as ShellTestCase,
+      ["Delete SUT ${sut1name}", 'erikubecli', "helm delete --purge ${sut1name}", false, true, true, false] as ShellTestCase,
+      ]
+
+    }
+  }
+

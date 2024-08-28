@@ -1,0 +1,105 @@
+description: Profile Provisioning Validator, Profile creation success case, all attributes acording to format and supported value ranges
+
+steps:
+  -
+    description:  Profile creation success.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/profiles/udmProfiles/udmSliceProfiles/2"
+            data:
+              udmSliceProfileId : "2"
+              plmnIdSets:
+                -
+                  plmnIdSetIdentifier: "Default"
+                  dnnLists:
+                    -
+                      dnnListId: "Default"
+                      dnnDataList:
+                        -
+                          dnn: "internet"
+                          defaultDnnIndicator: true
+                          lboRoamingAllowed: false
+                          iwkEpsInd: true
+                          sscModes:
+                            defaultSscMode: "SSC_MODE_1"
+                            allowedSscModes:
+                              -
+                                "SSC_MODE_2"
+                              -
+                                "SSC_MODE_3"
+                          pduSessionTypes:
+                            defaultSessionType: "IPV4"
+                            allowedSessionTypes:
+                              -
+                                "IPV4V6"
+                          5gQosProfile:
+                            5qi: 5
+                            priorityLevel: 1
+                            arp:
+                              priorityLevel: 11
+                              preemptCap : "NOT_PREEMPT"
+                              preemptVuln: "NOT_PREEMPTABLE"
+                          upSecurity:
+                            upConfid: "PREFERRED"
+                            upIntegr: "PREFERRED"
+                          3gppChargingCharacteristics: "0000"
+                          sessionAmbr:
+                            downlink: "10 Gbps"
+                            uplink: "100 Mbps"
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        content_type: application/json
+        data:
+          changes:
+            -
+              operation: "CREATE"
+              resource_path : "/profiles/udmProfiles/udmSliceProfiles/2"
+              data:
+                udmSliceProfileId : "2"
+                plmnIdSets:
+                  -
+                    plmnIdSetIdentifier: "Default"
+                    dnnLists:
+                      -
+                        dnnListId: "Default"
+                        dnnDataList:
+                          -
+                            dnn: "internet"
+                            defaultDnnIndicator: true
+                            lboRoamingAllowed: false
+                            iwkEpsInd: true
+                            sscModes:
+                              defaultSscMode: "SSC_MODE_1"
+                              allowedSscModes:
+                                -
+                                  "SSC_MODE_2"
+                                -
+                                  "SSC_MODE_3"
+                            pduSessionTypes:
+                              defaultSessionType: "IPV4"
+                              allowedSessionTypes:
+                                -
+                                  "IPV4V6"
+                            5gQosProfile:
+                              5qi: 5
+                              priorityLevel: 1
+                              arp:
+                                priorityLevel: 11
+                                preemptCap : "NOT_PREEMPT"
+                                preemptVuln: "NOT_PREEMPTABLE"
+                            upSecurity:
+                              upConfid: "PREFERRED"
+                              upIntegr: "PREFERRED"
+                            3gppChargingCharacteristics: "0000"
+                            sessionAmbr:
+                              downlink: "10 Gbps"
+                              uplink: "100 Mbps"
+

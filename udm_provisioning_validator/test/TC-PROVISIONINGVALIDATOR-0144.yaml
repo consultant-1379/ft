@@ -1,0 +1,39 @@
+description: Provisioning Validator, Update operation over a resource not part of RelatedResources
+
+steps:
+  -
+    description:  RelatedResources is not related with resource path to update
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              forbiddenAreas:
+                -
+                  id: "22"
+        relatedResources:
+          "/subscribers/2209a/udmSubscription/udmStaticAndRegistrationData/udmStaticData":
+            udmSliceProfileId:
+                id: "1"
+            forbiddenAreas:
+              -
+                id: "1"
+      content_type: application/json
+      expected_response:
+        code: 422
+        schema: udm//ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Unprocessable entity
+              errorDetails:
+                description: "There is no associated relatedResource: /subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"

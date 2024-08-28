@@ -1,0 +1,22 @@
+name: udm_roaming_area_provisioning_validator
+description: Roaming Areas Provisioning Validator
+
+logging_level: INFO
+request_timeout: 1
+check_counters: False
+check_alarms: False
+
+frontend:
+  provisioning_validator:
+    host: eric-udm-udmprovisioningvalidator
+    protocol: HTTP/2
+    port: 9002
+
+backend: {}
+
+test_cases:
+  - TC-ROAMINGAREAPROVISIONINGVALIDATOR-0010
+  - TC-ROAMINGAREAPROVISIONINGVALIDATOR-0011
+  - TC-ROAMINGAREAPROVISIONINGVALIDATOR-0040
+  - TC-ROAMINGAREAPROVISIONINGVALIDATOR-0110
+

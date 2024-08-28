@@ -1,0 +1,267 @@
+description: Provisioning Validator, Invalid Format Error cases
+
+steps:
+  -
+    description:  SubscribedUeAmbr Wrong format in uplink.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              subscribedUeAmbr:
+                uplink: "aaa Gbps"
+                downlink: "200 Gbps"
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "IMSI1"
+            notifRef: "notifRef1"
+            imsiMask: "imsiMask1"
+          "/profiles/udmProfiles/udmSliceProfiles/1":
+            udmSliceProfileId : "1"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "\"uplink\" in \"subscribedUeAmbr\" has not the valid format"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+  -
+    description:  SubscribedUeAmbr Wrong format in downlink.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              subscribedUeAmbr:
+                uplink: "10 Gbps"
+                downlink: "aaaa Gbps"
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "IMSI1"
+            notifRef: "notifRef1"
+            imsiMask: "imsiMask1"
+          "/profiles/udmProfiles/udmSliceProfiles/1":
+            udmSliceProfileId : "1"            
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "\"downlink\" in \"subscribedUeAmbr\" has not the valid format"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+  -
+    description:  SD Wrong format in staticIpAddress.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              staticIpAddress:
+                nssaiDnnIpLists:
+                  -
+                    nssai:
+                      sst: 3
+                      sd: "RRREEE"
+                    dnnIpList:
+                      -
+                        dnn: "www"
+                        ipAddress:
+                          -
+                            ipv4Addr: "198.51.100.1"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7334"
+
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "IMSI1"
+            notifRef: "notifRef1"
+            imsiMask: "imsiMask1"
+          "/profiles/udmProfiles/udmSliceProfiles/1":
+            udmSliceProfileId : "1"            
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "\"sd\" in \"staticIpAddress\" has an Invalid Value"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+  -
+    description:  ipv4Address Wrong format in staticIpAddress.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              staticIpAddress:
+                nssaiDnnIpLists:
+                  -
+                    nssai:
+                      sst: 3
+                      sd: "ABDCEF"
+                    dnnIpList:
+                      -
+                        dnn: "www"
+                        ipAddress:
+                          -
+                            ipv4Addr: "11."
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7334"
+
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "IMSI1"
+            notifRef: "notifRef1"
+            imsiMask: "imsiMask1"
+          "/profiles/udmProfiles/udmSliceProfiles/1":
+            udmSliceProfileId : "1"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "\"ipv4Addr\" in \"staticIpAddress\" has an Invalid Value"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+  -
+    description:  ipv6Address Wrong format in staticIpAddress.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              staticIpAddress:
+                nssaiDnnIpLists:
+                  -
+                    nssai:
+                      sst: 3
+                      sd: "ABDCEF"
+                    dnnIpList:
+                      -
+                        dnn: "www"
+                        ipAddress:
+                          -
+                            ipv6Addr: "1.1.4"  
+                          -                          
+                            ipv6Prefix: "2001:db8:abcd:12::0/64"
+
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "IMSI1"
+            notifRef: "notifRef1"
+            imsiMask: "imsiMask1"
+          "/profiles/udmProfiles/udmSliceProfiles/1":
+            udmSliceProfileId : "1"            
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "\"ipv6Addr\" in \"staticIpAddress\" has an Invalid Value"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+  -
+    description:  ipv6Prefix Wrong format in staticIpAddress.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              udmSliceProfileId:
+                id: "1"
+              staticIpAddress:
+                nssaiDnnIpLists:
+                  -
+                    nssai:
+                      sst: 3
+                      sd: "ABDCEF"
+                    dnnIpList:
+                      -
+                        dnn: "www"
+                        ipAddress:
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7334"                            
+                          -
+                            ipv6Prefix: "22:33:55"
+
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "IMSI1"
+            notifRef: "notifRef1"
+            imsiMask: "imsiMask1"
+          "/profiles/udmProfiles/udmSliceProfiles/1":
+            udmSliceProfileId : "1"            
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "\"ipv6Prefix\" in \"staticIpAddress\" has an Invalid Value"
+                resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"

@@ -1,0 +1,25 @@
+changes:
+  -
+    operation: $operation
+    resource_path : "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+    data:
+      udmSliceProfileId:
+        id: "1"
+      serviceAreaRestriction:
+        restrictionType: "ALLOWED_AREAS"
+        areas:
+          -
+            id: $id
+          -
+            id: "2"
+relatedResources:
+  "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData":
+    udmSliceProfileId:
+        id: "1"
+    serviceAreaRestriction:
+      restrictionType: "ALLOWED_AREAS"
+      areas:
+        -
+          id: "1"
+  "/profiles/udmProfiles/udmSliceProfiles/1":
+    udmSliceProfileId : "1"

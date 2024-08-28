@@ -1,0 +1,63 @@
+description: Provisioning Validator, URI Malformed Test Cases
+
+steps:
+  -
+    description:  Malformed Uri (vaaaalidation).
+    values:
+      id: "1"
+      operation: "CREATE"
+    rest:
+      host: provisioning_validator
+      uri: /vaaaaaalidation/v1/validate/validate
+      method: POST
+      data: udm/service_area_restriction_success
+      content_type: application/json
+      expected_response:
+        code: 400
+        schema: udm/ProblemDetails
+        content_type: application/json
+  -
+    description:  Malformed Uri (v11111111111111).
+    values:
+      id: "1"
+      operation: "CREATE"
+    rest:
+      host: provisioning_validator
+      uri: /validation/pepe/validate/validate
+      method: POST
+      data: udm/service_area_restriction_success
+      content_type: application/json
+      expected_response:
+        code: 400
+        schema: udm/ProblemDetails
+        content_type: application/json
+  -
+    description:  Malformed Uri (vaaaalidaaate).
+    values:
+      id: "1"
+      operation: "CREATE"
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/vaaaalidaaate/validate
+      method: POST
+      data: udm/service_area_restriction_success
+      content_type: application/json
+      expected_response:
+        code: 400
+        schema: udm/ProblemDetails
+        content_type: application/json
+  -
+    description:  Malformed Uri (vaaaalidaaate).
+    values:
+      id: "1"
+      operation: "CREATE"
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validaaate/vaaaaaaaaaaaalidate
+      method: POST
+      data: udm/service_area_restriction_success
+      content_type: application/json
+      expected_response:
+        code: 400
+        schema: udm/ProblemDetails
+        content_type: application/json

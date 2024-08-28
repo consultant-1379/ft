@@ -1,0 +1,47 @@
+description: Provisioning Validator, SmsStaticData Update Error case, 422 error (no relatedResources)
+
+steps:
+  -
+    description:  SmsStaticData Update Error, no smsStaticData as relatedResource
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: true
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: false
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2209b/smsSubscription/smsStaticAndRegistrationData/smsStaticData":
+            smsSubscriptionData:
+              smsSubscribed: true
+            smsManagementSubscriptionData:
+              mtSmsSubscribed: true
+              mtSmsBarringAll: false
+              mtSmsBarringRoaming: false
+              moSmsSubscribed: false
+              moSmsBarringAll: false
+              moSmsBarringRoaming: false
+      content_type: application/json
+      expected_response:
+        code: 422
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Unprocessable entity
+              errorDetails:
+                description: "There is no associated relatedResource: /subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+                resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"

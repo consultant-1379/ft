@@ -1,0 +1,18 @@
+type: object
+required:
+  - changes
+properties:
+  changes:
+    type: array
+    items:
+      type: object
+      required:
+        - operation
+        - resource_path
+      properties:
+        operation:
+          type: string            
+        resource_path:
+          type: string
+        data:
+          type: object            

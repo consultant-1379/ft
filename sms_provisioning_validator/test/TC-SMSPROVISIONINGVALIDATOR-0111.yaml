@@ -1,0 +1,39 @@
+description: Provisioning Validator, SmsStaticData Creation Error case, 422 error (no relatedResources)
+
+steps:
+  -
+    description:  SmsStaticData Creation Error, no related resources
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: true
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: false
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2209b/journal/provJournal":
+            imsi: "21405612345678"
+      content_type: application/json
+      expected_response:
+        code: 422
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Unprocessable entity
+              errorDetails:
+                description: "provJournal for subscriber mscId=2208a not included. Needed to check if IMSI is defined: /subscribers/2208a/journal/provJournal"
+                resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"

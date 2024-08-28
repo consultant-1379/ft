@@ -1,0 +1,17 @@
+changes:
+  -
+    operation: "CREATE"
+    resource_path: "/profiles/udmProfiles/udmRoamingAreas/1234"
+    data:
+      udmRoamingAreaId: "1234"
+      vendorSpecific-002:
+        -
+          "vendor1"
+        -
+          "vendor2"
+      areaList:
+        -
+          tacs:
+            -
+              "1357"
+          

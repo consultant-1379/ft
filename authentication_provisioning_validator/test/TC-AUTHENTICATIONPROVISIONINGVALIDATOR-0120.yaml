@@ -1,0 +1,275 @@
+description: AuthSubscription object, Check attributes are not modifiable
+
+steps:
+  -
+    description:  AuthSubscription update error, encPermanentKey cannot be modified.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod: "5G_AKA"
+              encPermanentKey: "3300AA34D40C090D6D4C3B7763854AAA"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+        relatedResources:
+          "/subscribers/123abc/authSubscription":
+            "imsi-123456789012345":
+              authSubscriptionStaticData:
+                authenticationMethod: "5G_AKA"
+                encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+                authenticationManagementField: "B9B9"
+                algorithmId: "11"
+                a4KeyInd: "1"
+                a4Ind: "2"
+                encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+              authSubscriptionDynamicData:
+                sqnScheme: "GENERAL"
+                sqn: "111111111111"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"encPermanentKey\" in \"authSubscriptionStaticData\" cannot be modified"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription update error, algorithmId cannot be modified.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod: "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "12"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+        relatedResources:
+          "/subscribers/123abc/authSubscription":
+            "imsi-123456789012345":
+              authSubscriptionStaticData:
+                authenticationMethod: "5G_AKA"
+                encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+                authenticationManagementField: "B9B9"
+                algorithmId: "11"
+                a4KeyInd: "1"
+                a4Ind: "2"
+                encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+              authSubscriptionDynamicData:
+                sqnScheme: "GENERAL"
+                sqn: "111111111111"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"algorithmId\" in \"authSubscriptionStaticData\" cannot be modified"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription update error, a4KeyInd cannot be modified.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod: "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "2"
+              a4Ind: "2"
+              encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+        relatedResources:
+          "/subscribers/123abc/authSubscription":
+            "imsi-123456789012345":
+              authSubscriptionStaticData:
+                authenticationMethod: "5G_AKA"
+                encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+                authenticationManagementField: "B9B9"
+                algorithmId: "11"
+                a4KeyInd: "1"
+                a4Ind: "2"
+                encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+              authSubscriptionDynamicData:
+                sqnScheme: "GENERAL"
+                sqn: "111111111111"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"a4KeyInd\" in \"authSubscriptionStaticData\" cannot be modified"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription update error, a4Ind cannot be modified.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod: "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "1"
+              encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+        relatedResources:
+          "/subscribers/123abc/authSubscription":
+            "imsi-123456789012345":
+              authSubscriptionStaticData:
+                authenticationMethod: "5G_AKA"
+                encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+                authenticationManagementField: "B9B9"
+                algorithmId: "11"
+                a4KeyInd: "1"
+                a4Ind: "2"
+                encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+              authSubscriptionDynamicData:
+                sqnScheme: "GENERAL"
+                sqn: "111111111111"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"a4Ind\" in \"authSubscriptionStaticData\" cannot be modified"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription update error, encOpcKey cannot be modified.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod: "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A5"
+        relatedResources:
+          "/subscribers/123abc/authSubscription":
+            "imsi-123456789012345":
+              authSubscriptionStaticData:
+                authenticationMethod: "5G_AKA"
+                encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+                authenticationManagementField: "B9B9"
+                algorithmId: "11"
+                a4KeyInd: "1"
+                a4Ind: "2"
+                encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+              authSubscriptionDynamicData:
+                sqnScheme: "GENERAL"
+                sqn: "111111111111"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"encOpcKey\" in \"authSubscriptionStaticData\" cannot be modified"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"  
+  -
+    description:  AuthSubscription update error, a4KeyV cannot be modified.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod: "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A5"
+              a4KeyV: "12"
+        relatedResources:
+          "/subscribers/123abc/authSubscription":
+            "imsi-123456789012345":
+              authSubscriptionStaticData:
+                authenticationMethod: "5G_AKA"
+                encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+                authenticationManagementField: "B9B9"
+                algorithmId: "11"
+                a4KeyInd: "1"
+                a4Ind: "2"
+                encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A5"
+                a4KeyV: "15"
+              authSubscriptionDynamicData:
+                sqnScheme: "GENERAL"
+                sqn: "111111111111"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"a4KeyV\" in \"authSubscriptionStaticData\" cannot be modified"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData" 

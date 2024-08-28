@@ -1,0 +1,11 @@
+changes:
+  -
+    operation: "CREATE"
+    resource_path: "/profiles/udmProfiles/udmRoamingAreas/1234"
+    data:
+      udmRoamingAreaId: "1234"
+      vendorSpecific-0011: true
+      areaList:
+        -
+          areaCodes: "2332233"
+          

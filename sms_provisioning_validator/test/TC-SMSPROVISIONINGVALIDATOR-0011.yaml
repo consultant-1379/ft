@@ -1,0 +1,67 @@
+description: Provisioning Validator, SmsStaticData creation success case with vendor specific attributes
+
+steps:
+  -
+    description: SmsStaticData creation success with all optional attributes and vendor specific attributes
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+                vendorSpecific-00194: "hello"
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: true
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: false
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+                vendorSpecific-00195:
+                  -
+                    key10: true
+                    key11: false
+                  -
+                    key10: false
+                    key11: true
+              vendorSpecific-00193:
+                key1: 100
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "21405612345678"
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        data:
+          changes:
+            -
+              operation: "CREATE"
+              resource_path : "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+              data:
+                smsSubscriptionData:
+                  smsSubscribed: true
+                  vendorSpecific-00194: "hello"
+                smsManagementSubscriptionData:
+                  mtSmsSubscribed: true
+                  mtSmsBarringAll: false
+                  mtSmsBarringRoaming: false
+                  moSmsSubscribed: false
+                  moSmsBarringAll: false
+                  moSmsBarringRoaming: false
+                  vendorSpecific-00195:
+                    -
+                      key10: true
+                      key11: false
+                    -
+                      key10: false
+                      key11: true
+                vendorSpecific-00193:
+                  key1: 100
+        content_type: application/json

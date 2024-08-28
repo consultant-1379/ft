@@ -1,0 +1,46 @@
+description: AuthSubscription object, Error 422 returned no relatedResource associated
+
+steps:
+  -
+    description:  AuthSubscription update Error, Error 422 returned no relatedResource associated.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "11"
+              a4KeyInd: "1"
+              a4Ind: "2"
+        relatedResources:
+          "/subscribers/123abc/authSubscription":
+            "imsi-123456789012346":
+              authSubscriptionStaticData:
+                authenticationMethod: "5G_AKA"
+                encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFB"
+                authenticationManagementField: "A8A8"
+                algorithmId: "11"
+                a4KeyInd: "1"
+                a4Ind: "2"
+              authSubscriptionDynamicData:
+                sqnScheme: "GENERAL"
+                sqn: "111111111111"
+      content_type: application/json
+      expected_response:
+        code: 422
+        schema: udm/ProblemDetails
+        data:
+          errors:
+            -
+              errorMessage: "Unprocessable entity"
+              errorDetails:
+                description: "There is no associated relatedResource: /subscribers/123abc/authSubscription/imsi-123456789012345"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+        content_type: application/json

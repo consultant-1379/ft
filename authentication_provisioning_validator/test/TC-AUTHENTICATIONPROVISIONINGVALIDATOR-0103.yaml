@@ -1,0 +1,65 @@
+description: AuthSubscription object, encPermanentKey length should be valid for Milenage and Test Algorithm, that is, length equal 128 bit which shall be encoded as 32 HexDec chars
+
+steps:
+  -
+    description:  AuthSubscription creation error, encPermanentKey length is below 32 chars.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AF"
+              authenticationManagementField: "B9B9"
+              algorithmId: "2"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"encPermanentKey\" in \"authSubscriptionStaticData\" has invalid size"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+  -
+    description:  AuthSubscription creation error, encPermanentKey length is above 32 chars.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path : "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"
+            data:
+              authenticationMethod : "5G_AKA"
+              encPermanentKey: "2200AA34D40C090D6D4C3B7763854AFBB"
+              authenticationManagementField: "B9B9"
+              algorithmId: "2"
+              a4KeyInd: "1"
+              a4Ind: "2"
+              encOpcKey: "7AF98A06EA86AB8B3377D27AE089A3A4"
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: "Constraint Violation"
+              errorDetails:
+                description: "\"encPermanentKey\" in \"authSubscriptionStaticData\" has invalid size"
+                resource_path: "/subscribers/123abc/authSubscription/imsi-123456789012345/authSubscriptionStaticData"

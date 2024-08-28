@@ -1,0 +1,98 @@
+description: When mtSmsBarringRoaming is added, it cannot take true value if mtSmsSubscribed is false
+
+steps:
+  -
+    description: When mtSmsBarringRoaming is added, it cannot take true value if mtSmsSubscribed is false
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: false
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: true
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData":
+            smsSubscriptionData:
+              smsSubscribed: true
+            smsManagementSubscriptionData:
+              mtSmsSubscribed: false
+              mtSmsBarringAll: false
+              moSmsSubscribed: false
+              moSmsBarringAll: false
+              moSmsBarringRoaming: false
+      content_type: application/json
+      expected_response:
+        code: 409
+        schema: udm/ProblemDetails
+        content_type: application/json
+        data:
+          errors:
+            -
+              errorMessage: Constraint Violation
+              errorDetails:
+                description: "mtSmsSubscribed must be true if either mtSmsBarringAll or mtSmsBarringRoaming is true"
+                resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+
+  -
+    description: When mtSmsBarringRoaming is added, it can take true value if mtSmsSubscribed is true
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "UPDATE"
+            resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+            data:
+              smsSubscriptionData:
+                smsSubscribed: true
+              smsManagementSubscriptionData:
+                mtSmsSubscribed: true
+                mtSmsBarringAll: false
+                mtSmsBarringRoaming: true
+                moSmsSubscribed: false
+                moSmsBarringAll: false
+                moSmsBarringRoaming: false
+        relatedResources:
+          "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData":
+            smsSubscriptionData:
+              smsSubscribed: true
+            smsManagementSubscriptionData:
+              mtSmsSubscribed: false
+              mtSmsBarringAll: false
+              moSmsSubscribed: false
+              moSmsBarringAll: false
+              moSmsBarringRoaming: false
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        content_type: application/json
+        data:
+          changes:
+            -
+              operation: "UPDATE"
+              resource_path: "/subscribers/2208a/smsSubscription/smsStaticAndRegistrationData/smsStaticData"
+              data:
+                smsSubscriptionData:
+                  smsSubscribed: true
+                smsManagementSubscriptionData:
+                  mtSmsSubscribed: true
+                  mtSmsBarringAll: false
+                  mtSmsBarringRoaming: true
+                  moSmsSubscribed: false
+                  moSmsBarringAll: false
+                  moSmsBarringRoaming: false

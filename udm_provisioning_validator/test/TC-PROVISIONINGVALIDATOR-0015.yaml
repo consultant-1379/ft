@@ -1,0 +1,307 @@
+description: Provisioning Validator, UdmStaticData creation with vendorSpecific in all possible attributes success case
+
+steps:
+  -
+    description:  UdmStaticData with all possible attributes creation success.
+    rest:
+      host: provisioning_validator
+      uri: /validation/v1/validate/validate
+      method: POST
+      data:
+        changes:
+          -
+            operation: "CREATE"
+            resource_path: "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+            data:
+              vendorSpecific-0001:
+                -
+                  testVendor:
+                    -
+                      test1: "the test"
+                    -
+                      test2: "the test2"
+              udmSliceProfileId:
+                id: "1"
+              subscribedUeAmbr:
+                downlink: "1 Gbps"
+                uplink: "2 Mbps"
+                vendorSpecific-0002:
+                  testVendor0002: "the test2"
+                  testVendor0003:
+                    - 
+                      test1
+                    -
+                      test2
+              ratRestrictions:
+                -
+                  "NR"
+                -
+                  "WLAN"                
+
+              forbiddenAreas:
+                -
+                  id: "1"
+                  vendorSpecific-0004:
+                    vendorTest1: "test"
+                    vendorTest2: "test2"
+                    vendorTest3:
+                      -
+                        test3
+                      -
+                        test4
+              serviceAreaRestriction:
+                restrictionType: "ALLOWED_AREAS"
+                areas:
+                  -
+                    id: "1"                
+                maxNumOfTAs: 100
+                vendorSpecific-0005:
+                  -
+                    test2:
+                      -
+                        "test2"               
+                      -
+                        "test3"
+                  -
+                    test3:
+                      -
+                        "test4"               
+                      -
+                        "test5"
+
+              coreNetworkTypeRestrictions:
+                -
+                  "5GC"
+                -
+                  "EPC"                
+              mpsPriority: true
+              mcsPriority: false
+              dlPacketCount: 3
+              micoAllowed: false
+              staticIpAddress:
+                vendorSpecific-0008:                  
+                  -
+                    testVendor
+                  -
+                    testVendor0002
+                nssaiDnnIpLists:                  
+                  -
+                    nssai:
+                      sst: 14
+                      sd: "ABCDEF"
+                      vendorSpecific-0013:
+                        vendorTest:
+                          vendorTest2:
+                            vendorTest3:
+                              -
+                                vendorTest4:
+                                  vendorTest5: 44
+                              -
+                                vendorTest6:
+                                  vendorTest7: 55
+
+                    dnnIpList:
+                      -
+                        dnn: "5"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.1"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7334"                          
+                            vendorSpecific-0018:
+                              -
+                                thevendor:
+                                  -
+                                    vendorTest:
+                                      vendorTest2: true
+                              -
+                                thevendor2:
+                                  -
+                                    vendorTest3:
+                                      vendorTest4: false
+                        vendorSpecific-0016:
+                          vendorSpecific-0017: "testVendor"
+                      -
+                        dnn: "7"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.2"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7335"                      
+
+                  -
+                    nssai:
+                      sst: 15
+                      sd: "ABCEEE"
+                    dnnIpList:
+                      -
+                        dnn: "6"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.3"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7336"
+                      -
+                        dnn: "8"
+                        ipAddress:
+                          -
+                            ipv4Addr: "192.168.10.4"
+                          -
+                            ipv6Addr: "2001:db8:85a3::8a2e:370:7337"
+              roamingOdb: "OUTSIDE_HOME_PLMN"
+              ueUsageType: 23
+              rfspIndex: 98
+              subsRegTimer: 102
+        relatedResources:
+          "/subscribers/2208a/journal/provJournal":
+            imsi: "IMSI1"
+            notifRef: "notifRef1"
+            imsiMask: "imsiMask1"
+          "/profiles/udmProfiles/udmSliceProfiles/1":
+            udmSliceProfileId : "1"
+      content_type: application/json
+      expected_response:
+        code: 200
+        schema: udm/response_validation
+        data:
+          changes:
+            -
+              operation: CREATE
+              resource_path : "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+              data:
+                vendorSpecific-0001:
+                -
+                  testVendor:
+                    -
+                      test1: "the test"
+                    -
+                      test2: "the test2"
+                udmSliceProfileId:
+                  id: "1"
+                subscribedUeAmbr:
+                  downlink: "1 Gbps"
+                  uplink: "2 Mbps"
+                  vendorSpecific-0002:
+                    testVendor0002: "the test2"
+                    testVendor0003:
+                      - 
+                        test1
+                      -
+                        test2
+                ratRestrictions:
+                  -
+                    "NR"
+                  -
+                    "WLAN"                  
+                forbiddenAreas:
+                  -
+                    id: "1"
+                    vendorSpecific-0004:
+                      vendorTest1: "test"
+                      vendorTest2: "test2"
+                      vendorTest3:
+                        -
+                          test3
+                        -
+                          test4
+                serviceAreaRestriction:
+                  restrictionType: "ALLOWED_AREAS"
+                  areas:
+                    -
+                      id: "1"
+                  maxNumOfTAs: 100
+                  vendorSpecific-0005:
+                    -
+                      test2:
+                        -
+                          "test2"               
+                        -
+                          "test3"
+                    -
+                      test3:
+                        -
+                          "test4"               
+                        -
+                          "test5"
+                coreNetworkTypeRestrictions:
+                  -
+                    "5GC"
+                  -
+                    "EPC"                  
+                mpsPriority: true
+                mcsPriority: false
+                dlPacketCount: 3
+                micoAllowed: false
+                staticIpAddress:
+                  vendorSpecific-0008:                    
+                    -
+                      testVendor
+                    -
+                      testVendor0002
+                  nssaiDnnIpLists:                    
+                    -
+                      nssai:
+                        sst: 14
+                        sd: "ABCDEF"
+                        vendorSpecific-0013:
+                          vendorTest:
+                            vendorTest2:
+                              vendorTest3:
+                                -
+                                  vendorTest4:
+                                    vendorTest5: 44
+                                -
+                                  vendorTest6:
+                                    vendorTest7: 55
+                      dnnIpList:
+                        -
+                          dnn: "5"
+                          ipAddress:
+                            -
+                              ipv4Addr: "192.168.10.1"
+                            -
+                              ipv6Addr: "2001:db8:85a3::8a2e:370:7334"                            
+                              vendorSpecific-0018:
+                                -
+                                  thevendor:
+                                    -
+                                      vendorTest:
+                                        vendorTest2: true
+                                -
+                                  thevendor2:
+                                    -
+                                      vendorTest3:
+                                        vendorTest4: false
+                          vendorSpecific-0016:
+                            vendorSpecific-0017: "testVendor"
+                        -
+                          dnn: "7"
+                          ipAddress:
+                            -
+                              ipv4Addr: "192.168.10.2"
+                            -
+                              ipv6Addr: "2001:db8:85a3::8a2e:370:7335"                        
+                    -
+                      nssai:
+                        sst: 15
+                        sd: "ABCEEE"
+                      dnnIpList:
+                        -
+                          dnn: "6"
+                          ipAddress:
+                            -
+                              ipv4Addr: "192.168.10.3"
+                            -
+                              ipv6Addr: "2001:db8:85a3::8a2e:370:7336"
+                        -
+                          dnn: "8"
+                          ipAddress:
+                            -
+                              ipv4Addr: "192.168.10.4"
+                            -
+                              ipv6Addr: "2001:db8:85a3::8a2e:370:7337"
+                roamingOdb: "OUTSIDE_HOME_PLMN"
+                ueUsageType: 23
+                rfspIndex: 98
+                subsRegTimer: 102
+        content_type: application/json

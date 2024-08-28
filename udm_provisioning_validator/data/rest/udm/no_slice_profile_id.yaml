@@ -1,0 +1,10 @@
+changes:
+  -
+    operation: $operation
+    resource_path : "/subscribers/2208a/udmSubscription/udmStaticAndRegistrationData/udmStaticData"
+    data:
+      serviceAreaRestriction:
+        restrictionType: "ALLOWED_AREAS"
+        areas:
+          -
+            id: $id
